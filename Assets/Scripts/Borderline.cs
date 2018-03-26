@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,15 +18,25 @@ public class Borderline : MonoBehaviour {
     public float width = 1;
     LineRenderer line;
 
+    public Vector3[] positions { get; private set; }
+
     // Use this for initialization
     void Start () {
         line = gameObject.GetComponent<LineRenderer>();
         line.useWorldSpace = true;
 
+        //TODO Generate the points in a global Game Controller and send them to Player and Borderlines
         CreatePoints();
+        SendPointsToPlayer();
     }
-	
-	void CreatePoints()
+
+    private void SendPointsToPlayer()
+    {
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.positions = this.positions;
+    }
+
+    void CreatePoints()
     {
         float x;
         float y;
@@ -36,7 +47,7 @@ public class Borderline : MonoBehaviour {
         line.positionCount = (segments+1);
 
 
-        Vector3[] positions = new Vector3[(segments + 1)];
+        positions = new Vector3[(segments + 1)];
 
         for (int i = 0; i < (segments + 1); i++)
         {
