@@ -17,14 +17,18 @@ public class GameController : MonoBehaviour {
     public Player player;
     public Borderline borderline;
 
+    private int halfwayXPixel;
+
     void Awake()
     {
         CreatePoints();
+        halfwayXPixel = Screen.width / 2;
     }
 
     // Use this for initialization
     void Start () {
         SendPositionsToPlayerAndFactory();
+        Debug.Log("HALFWAY " +halfwayXPixel);
 	}
 
     private void SendPositionsToPlayerAndFactory()
@@ -35,8 +39,26 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+        if(Input.touchCount > 0)
+        {
+            handleTouches();
+        }
+        
 	}
+
+    void handleTouches()
+    {
+        Touch newTouch = Input.GetTouch(0);
+
+        if (newTouch.position.x < halfwayXPixel)
+        {
+            player.MovePlayerClockwise();
+        } else
+        {
+            player.MovePlayerCounterClockwise();
+        }
+
+    }
 
     //Borrowed from https://gamedev.stackexchange.com/questions/126427/draw-circle-around-gameobject-to-indicate-radius
     void CreatePoints()
