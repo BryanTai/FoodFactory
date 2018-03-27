@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour {
 
     private int halfwayXPixel;
 
+    Camera camera;
+
     void Awake()
     {
         CreatePoints();
@@ -28,7 +30,9 @@ public class GameController : MonoBehaviour {
         SendPositionsToPlayerAndFactory();
         Debug.Log("HALFWAY " +halfwayXPixel);
         player.MovePlayerClockwise(); //TODO just to get the player onto the borderline
-	}
+        camera = GetComponent<Camera>();
+        
+    }
 
     private void SendPositionsToPlayerAndFactory()
     {
@@ -42,8 +46,9 @@ public class GameController : MonoBehaviour {
         {
             handleTouches();
         }
-        
-	}
+        Vector3 worldPos = camera.transform.position;
+        Debug.Log("Camera : " + worldPos);
+    }
 
     void handleTouches()
     {
