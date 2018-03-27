@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currentPositionIndex = 0;
-	}
+    }
 
     public void MovePlayerClockwise()
     {

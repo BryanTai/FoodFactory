@@ -8,9 +8,7 @@ public class GameController : MonoBehaviour {
     [Range(0, 50)]
     public int segments = 50;
     [Range(0, 100)]
-    public float xradius = 100;
-    [Range(0, 100)]
-    public float yradius = 100;
+    public float radius = 100;
 
     public Vector3[] playerPositions { get; private set; }
 
@@ -29,6 +27,7 @@ public class GameController : MonoBehaviour {
     void Start () {
         SendPositionsToPlayerAndFactory();
         Debug.Log("HALFWAY " +halfwayXPixel);
+        player.MovePlayerClockwise(); //TODO just to get the player onto the borderline
 	}
 
     private void SendPositionsToPlayerAndFactory()
@@ -64,6 +63,7 @@ public class GameController : MonoBehaviour {
     void CreatePoints()
     {
         float x;
+        float y = 1;
         float z;
 
         float angle = 20f;
@@ -72,10 +72,10 @@ public class GameController : MonoBehaviour {
 
         for (int i = 0; i < (segments + 1); i++)
         {
-            x = Mathf.Sin(Mathf.Deg2Rad * angle) * xradius;
-            z = Mathf.Cos(Mathf.Deg2Rad * angle) * yradius;
+            x = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
+            z = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
 
-            playerPositions[i] = new Vector3(x, 0, z);
+            playerPositions[i] = new Vector3(x, y, z);
 
             angle += (360f / segments);
         }

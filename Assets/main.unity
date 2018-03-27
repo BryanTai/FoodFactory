@@ -524,9 +524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d88e35f20e68a4489678496efaa6b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segments: 50
-  xradius: 100
-  yradius: 100
+  segments: 25
+  radius: 32.3
   player: {fileID: 123814590}
   borderline: {fileID: 1602705628}
 --- !u!21 &1509359185
@@ -592,10 +591,6 @@ Prefab:
     - target: {fileID: 4735001815252012, guid: cf203645b15b6ae4bbd29577465be375, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1418824034691222, guid: cf203645b15b6ae4bbd29577465be375, type: 2}
-      propertyPath: m_TagString
-      value: Borderline
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf203645b15b6ae4bbd29577465be375, type: 2}

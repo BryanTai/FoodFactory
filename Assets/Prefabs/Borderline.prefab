@@ -52,9 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56687962045ea0d4697233366c7c039a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segments: 50
-  xradius: 100
-  yradius: 100
   width: 2
 --- !u!120 &120551582437011958
 LineRenderer:
