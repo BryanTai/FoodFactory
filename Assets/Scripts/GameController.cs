@@ -18,11 +18,17 @@ public class GameController : MonoBehaviour {
     private int halfwayXPixel;
 
     Camera camera;
+    System.Random rnd;
+
+    public Vector3 cannonPosition;
+    public GameObject IngredientPrefab;
+    public Transform IngredientSpawnPosition;
 
     void Awake()
     {
         CreatePoints();
         halfwayXPixel = Screen.width / 2;
+        rnd = new System.Random();
     }
 
     // Use this for initialization
@@ -31,8 +37,12 @@ public class GameController : MonoBehaviour {
         Debug.Log("HALFWAY " +halfwayXPixel);
         player.MovePlayerClockwise(); //TODO just to get the player onto the borderline
         camera = GetComponent<Camera>();
-        
+        cannonPosition = IngredientSpawnPosition.position; //TODO this is the top of the factory, find a better way to get this value
+
+        ShootIngredient();
     }
+
+    
 
     private void SendPositionsToPlayerAndFactory()
     {
@@ -46,8 +56,11 @@ public class GameController : MonoBehaviour {
         {
             handleTouches();
         }
-        Vector3 worldPos = camera.transform.position;
-        Debug.Log("Camera : " + worldPos);
+        //Print camera coordinates (for testing)
+        //Vector3 worldPos = camera.transform.position;
+        //Debug.Log("Camera : " + worldPos);
+
+
     }
 
     void handleTouches()
@@ -84,5 +97,38 @@ public class GameController : MonoBehaviour {
 
             angle += (360f / segments);
         }
+    }
+
+    //Ingredient launching code
+
+    private void ShootIngredient()
+    {
+        Vector3 randomDestination = pickRandomPlayerPosition();
+        Vector3 initVelocity = calculateBallisticVelocity(randomDestination);
+
+        GameObject newIngredient = Instantiate(IngredientPrefab);
+        newIngredient.transform.position = cannonPosition;
+        newIngredient.GetComponent<Rigidbody>().velocity = initVelocity;
+        Debug.Log("initVelocity: " + initVelocity);
+    }
+
+    private Vector3 calculateBallisticVelocity(Vector3 destination)
+    {
+        Vector3 direction = destination - cannonPosition;
+        float heightDifference = direction.y;
+        direction.y = 0;
+        float distance = direction.magnitude;
+        float angle = 80 * Mathf.Deg2Rad; //TODO Hardcoded 80 degree angle
+        direction.y = distance * Mathf.Tan(angle); //set direction to the elevation angle
+        distance += heightDifference / Mathf.Tan(angle); //Correction for height difference
+
+        float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * angle));
+        return velocity * direction.normalized;
+    }
+
+    private Vector3 pickRandomPlayerPosition()
+    {
+        return playerPositions[0]; //TODO FOR TESTING
+        //return playerPositions[rnd.Next(segments + 1)];
     }
 }

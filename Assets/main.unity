@@ -170,6 +170,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4735001815252012, guid: cf203645b15b6ae4bbd29577465be375,
     type: 2}
   m_PrefabInternal: {fileID: 1602705627}
+--- !u!4 &231634366 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4044381383643580, guid: 4c20a2bdf8724504abe7333cf8e32963,
+    type: 2}
+  m_PrefabInternal: {fileID: 872185723}
 --- !u!43 &633339854
 Mesh:
   m_ObjectHideFlags: 0
@@ -409,11 +414,20 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1644142720955956, guid: 4c20a2bdf8724504abe7333cf8e32963, type: 2}
+    - target: {fileID: 1084083452740780, guid: 4c20a2bdf8724504abe7333cf8e32963, type: 2}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1267760169196868, guid: 4c20a2bdf8724504abe7333cf8e32963, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134661359050636, guid: 4c20a2bdf8724504abe7333cf8e32963, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 65824937680422858, guid: 4c20a2bdf8724504abe7333cf8e32963, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4c20a2bdf8724504abe7333cf8e32963, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &919530327 stripped
@@ -536,6 +550,10 @@ MonoBehaviour:
   radius: 32.3
   player: {fileID: 123814590}
   borderline: {fileID: 1602705628}
+  cannonPosition: {x: 0, y: 0, z: 0}
+  IngredientPrefab: {fileID: 1817212627693320, guid: 51ea9ac087b267a4f816dd3c5c367aa6,
+    type: 2}
+  IngredientSpawnPosition: {fileID: 231634366}
 --- !u!21 &1509359185
 Material:
   serializedVersion: 6
