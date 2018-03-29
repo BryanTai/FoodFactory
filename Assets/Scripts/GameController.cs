@@ -43,10 +43,8 @@ public class GameController : MonoBehaviour {
         camera = GetComponent<Camera>();
         cannonPosition = IngredientSpawnPosition.position; //TODO this is the top of the factory, find a better way to get this value
 
-        ShootIngredient();
+        StartCoroutine(shootIngredientAtIntervals(3f));
     }
-
-    
 
     private void SendPositionsToPlayerAndFactory()
     {
@@ -105,7 +103,16 @@ public class GameController : MonoBehaviour {
 
     //Ingredient launching code
 
-    private void ShootIngredient()
+    private IEnumerator shootIngredientAtIntervals(float waitTime)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(waitTime);
+            shootIngredient();
+        }
+    }
+
+    private void shootIngredient()
     {
         Vector3 randomDestination = pickRandomPlayerPosition();
         Vector3 initVelocity = calculateBallisticVelocity(randomDestination);
@@ -132,7 +139,6 @@ public class GameController : MonoBehaviour {
 
     private Vector3 pickRandomPlayerPosition()
     {
-        return playerPositions[0]; //TODO FOR TESTING
-        //return playerPositions[rnd.Next(segments + 1)];
+        return playerPositions[rnd.Next(segments + 1)];
     }
 }
