@@ -24,11 +24,15 @@ public class GameController : MonoBehaviour {
     public GameObject IngredientPrefab;
     public Transform IngredientSpawnPosition;
 
+    private const float HEAVY_GRAVITY = -80f;
+
     void Awake()
     {
         CreatePoints();
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
+
+        Physics.gravity = new Vector3(0, HEAVY_GRAVITY, 0);
     }
 
     // Use this for initialization
