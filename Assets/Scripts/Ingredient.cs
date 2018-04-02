@@ -11,9 +11,18 @@ public class Ingredient : MonoBehaviour {
 
     void Update()
     {
+        //TODO switch this to check collision with Floor Plane and make it shrink
         if(transform.position.y < 0)
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("Hit the player!");
         }
     }
 }

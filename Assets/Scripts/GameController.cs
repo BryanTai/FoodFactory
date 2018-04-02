@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
     public Transform IngredientSpawnPosition;
 
     private const float HEAVY_GRAVITY = -80f;
+    private const float SPAWN_TIME = 2f;
 
     void Awake()
     {
@@ -43,7 +44,7 @@ public class GameController : MonoBehaviour {
         camera = GetComponent<Camera>();
         cannonPosition = IngredientSpawnPosition.position; //TODO this is the top of the factory, find a better way to get this value
 
-        StartCoroutine(shootIngredientAtIntervals(3f));
+        StartCoroutine(shootIngredientAtIntervals(SPAWN_TIME));
     }
 
     private void SendPositionsToPlayerAndFactory()
@@ -62,10 +63,24 @@ public class GameController : MonoBehaviour {
         //Vector3 worldPos = camera.transform.position;
         //Debug.Log("Camera : " + worldPos);
 
-
+        //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
+        handleKeys();
     }
 
-    void handleTouches()
+    //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
+    private void handleKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            player.MovePlayerClockwise();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            player.MovePlayerCounterClockwise();
+        }
+    }
+
+    private void handleTouches()
     {
         Touch newTouch = Input.GetTouch(0);
 
@@ -120,7 +135,7 @@ public class GameController : MonoBehaviour {
         GameObject newIngredient = Instantiate(IngredientPrefab);
         newIngredient.transform.position = cannonPosition;
         newIngredient.GetComponent<Rigidbody>().velocity = initVelocity;
-        Debug.Log("initVelocity: " + initVelocity);
+        //Debug.Log("initVelocity: " + initVelocity);
     }
 
     private Vector3 calculateBallisticVelocity(Vector3 destination)
