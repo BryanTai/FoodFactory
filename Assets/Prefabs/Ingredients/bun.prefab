@@ -54,7 +54,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4691320096678826}
   - component: {fileID: 114871759601874290}
-  - component: {fileID: 64394149536289264}
+  - component: {fileID: 54703130709852088}
+  - component: {fileID: 135509573727224458}
   m_Layer: 0
   m_Name: bun
   m_TagString: Untagged
@@ -69,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1759105196724998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24, y: 58.45, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 4936430490978752}
@@ -185,20 +186,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1135697331131574}
   m_Mesh: {fileID: 4300000, guid: 7cfcf5c5ad8910b4fbe42b667bf97114, type: 3}
---- !u!64 &64394149536289264
-MeshCollider:
+--- !u!54 &54703130709852088
+Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1759105196724998}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &114871759601874290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,3 +212,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9a52a7cfe1fca4e91514189e06ab8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &135509573727224458
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1759105196724998}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.99
+  m_Center: {x: 0, y: 0.21, z: 0}

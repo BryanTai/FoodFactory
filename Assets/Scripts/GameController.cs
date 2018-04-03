@@ -5,33 +5,48 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
+    public Player player;
+    private System.Random rnd;
+    private int halfwayXPixel;
+
+    //Borderline fields
     [Range(0, 50)]
     public int segments = 50;
     [Range(0, 100)]
     public float radius = 100;
-
-    public Vector3[] playerPositions { get; private set; }
-
-    public Player player;
     public Borderline borderline;
+    public Vector3[] playerPositions { get; private set; }
+    
 
-    private int halfwayXPixel;
-
-    Camera camera;
-    System.Random rnd;
-
+    //Ingredient launching fields
     public Vector3 cannonPosition;
-    public GameObject IngredientPrefab;
-    public Transform IngredientSpawnPosition;
-
     private const float HEAVY_GRAVITY = -80f;
     private const float SPAWN_TIME = 2f;
+
+    //Ingredient spawning fields
+    public GameObject BunPrefab; //TODO there's gotta be a better way to load these
+    public GameObject PattyPrefab; //otherwise just move it all to a factory
+    public GameObject LettucePrefab;
+    public GameObject TomatoPrefab;
+    public Transform IngredientSpawnPosition;
+
+    public enum IngredientType
+    {
+        bun,
+        patty,
+        lettuce,
+        tomato
+    }
+    private int totalIngredientTypes;
+
+    
 
     void Awake()
     {
         CreatePoints();
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
+        totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
 
         Physics.gravity = new Vector3(0, HEAVY_GRAVITY, 0);
     }
@@ -41,7 +56,6 @@ public class GameController : MonoBehaviour {
         SendPositionsToPlayerAndFactory();
         Debug.Log("HALFWAY " +halfwayXPixel);
         player.MovePlayerClockwise(); //TODO just to get the player onto the borderline
-        camera = GetComponent<Camera>();
         cannonPosition = IngredientSpawnPosition.position; //TODO this is the top of the factory, find a better way to get this value
 
         StartCoroutine(shootIngredientAtIntervals(SPAWN_TIME));
@@ -132,11 +146,31 @@ public class GameController : MonoBehaviour {
         Vector3 randomDestination = pickRandomPlayerPosition();
         Vector3 initVelocity = calculateBallisticVelocity(randomDestination);
 
-        GameObject newIngredient = Instantiate(IngredientPrefab);
+        GameObject newIngredient = pickRandomIngredient();
         newIngredient.transform.position = cannonPosition;
         newIngredient.GetComponent<Rigidbody>().velocity = initVelocity;
         //Debug.Log("initVelocity: " + initVelocity);
     }
+
+    private GameObject pickRandomIngredient()
+    {
+        int index = rnd.Next(totalIngredientTypes);
+        IngredientType nextType = (IngredientType)index;
+        switch (nextType)
+        {
+            case IngredientType.bun:
+                return Instantiate(BunPrefab);
+            case IngredientType.patty:
+                return Instantiate(PattyPrefab);
+            case IngredientType.lettuce:
+                return Instantiate(LettucePrefab);
+            case IngredientType.tomato:
+                return Instantiate(TomatoPrefab);
+            default:
+                throw new ArgumentException();
+        }
+    }
+
 
     private Vector3 calculateBallisticVelocity(Vector3 destination)
     {
