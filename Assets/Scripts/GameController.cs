@@ -3,11 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class GameController : MonoBehaviour {
 
     public Player player;
     private System.Random rnd;
     private int halfwayXPixel;
+
+    //Camera fields
+    private Camera playerCamera;
+    public GameObject Cannon;
+    float rotateSpeed = 0.5f;
 
     //Borderline fields
     [Range(0, 50)]
@@ -47,7 +53,7 @@ public class GameController : MonoBehaviour {
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
-
+        playerCamera = GetComponent<Camera>();
         Physics.gravity = new Vector3(0, HEAVY_GRAVITY, 0);
     }
 
@@ -69,16 +75,24 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        /* 
         if(Input.touchCount > 0)
         {
             handleTouches();
-        }
+        }*/
+
         //Print camera coordinates (for testing)
-        //Vector3 worldPos = camera.transform.position;
-        //Debug.Log("Camera : " + worldPos);
+        Vector3 targetPos = playerCamera.transform.position;
+        Debug.Log("Camera : " + targetPos);
+        Vector3 targetDir = targetPos - Cannon.transform.position;
+        float step = rotateSpeed * Time.deltaTime;
+
+        Vector3 newDir = Vector3.RotateTowards(Cannon.transform.forward, targetDir, step, 0.0f);
+        Cannon.transform.rotation = Quaternion.LookRotation(newDir);
+
 
         //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
-        handleKeys();
+        //handleKeys();
     }
 
     //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
