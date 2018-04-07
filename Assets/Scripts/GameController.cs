@@ -12,8 +12,14 @@ public class GameController : MonoBehaviour {
 
     //Camera fields
     private Camera playerCamera;
+
+    //Cannon fields
     public GameObject Cannon;
     float rotateSpeed = 0.5f;
+    enum Direction { up, down, left, right }
+    Direction targetOffsetDirection;
+    float verticalOffset = 20; //TODO adjust these
+    float horizontalOffset = 20;
 
     //Borderline fields
     [Range(0, 50)]
@@ -43,6 +49,7 @@ public class GameController : MonoBehaviour {
         lettuce,
         tomato
     }
+
     private int totalIngredientTypes;
 
     
@@ -55,6 +62,7 @@ public class GameController : MonoBehaviour {
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
         playerCamera = GetComponent<Camera>();
         Physics.gravity = new Vector3(0, HEAVY_GRAVITY, 0);
+        targetOffsetDirection = pickRandomCannonDirection();
     }
 
     // Use this for initialization
@@ -82,17 +90,41 @@ public class GameController : MonoBehaviour {
         }*/
 
         //Print camera coordinates (for testing)
-        Vector3 targetPos = playerCamera.transform.position;
-        Debug.Log("Camera : " + targetPos);
+        Vector3 targetPos = getCannonTargetAroundCamera(targetOffsetDirection);
+        //Debug.Log("Camera : " + targetPos);
         Vector3 targetDir = targetPos - Cannon.transform.position;
         float step = rotateSpeed * Time.deltaTime;
 
         Vector3 newDir = Vector3.RotateTowards(Cannon.transform.forward, targetDir, step, 0.0f);
         Cannon.transform.rotation = Quaternion.LookRotation(newDir);
-
+        //Debug.DrawRay(Cannon.transform.position, newDir, Color.red, 5.0f);
 
         //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
         //handleKeys();
+    }
+
+    
+
+    private Vector3 getCannonTargetAroundCamera(Direction direction)
+    {
+        switch (direction)
+        {
+            case (Direction.up): 
+                return playerCamera.transform.position + (transform.up * verticalOffset);
+            case (Direction.down):
+                return playerCamera.transform.position + (-transform.up * verticalOffset);
+            case (Direction.left):
+                return playerCamera.transform.position + (-transform.right * horizontalOffset);
+            case (Direction.right):
+                return playerCamera.transform.position + (transform.right * horizontalOffset);
+            default:
+                throw new ArgumentException();
+        }
+    }
+
+    private Direction pickRandomCannonDirection()
+    {
+        return (Direction)rnd.Next(4);
     }
 
     //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
@@ -152,6 +184,8 @@ public class GameController : MonoBehaviour {
         {
             yield return new WaitForSeconds(waitTime);
             shootIngredient();
+            targetOffsetDirection = pickRandomCannonDirection();
+            Debug.Log(targetOffsetDirection);
         }
     }
 
