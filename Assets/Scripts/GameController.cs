@@ -2,14 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Vuforia;
 
 [RequireComponent(typeof(Camera))]
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
     private System.Random rnd;
     private int halfwayXPixel;
 
-    //Camera fields
+    //Vuforia Camera fields
     private Camera playerCamera;
+    
 
     //Cannon fields
     public GameObject Cannon;
@@ -18,16 +21,7 @@ public class GameController : MonoBehaviour {
     Direction targetOffsetDirection;
     float verticalOffset = 15; //TODO adjust these
     float horizontalOffset = 50;
-
-    //Borderline fields
-    [Range(0, 50)]
-    public int segments = 50;
-    [Range(0, 100)]
-    public float radius = 100;
-    public Borderline borderline;
-    public Vector3[] playerPositions { get; private set; }
     
-
     //Ingredient launching fields
     private const float HEAVY_GRAVITY = -80f;
     private const float NO_GRAVITY = 0;
@@ -35,6 +29,7 @@ public class GameController : MonoBehaviour {
     float ingredientLaunchSpeed = 20;
 
     //Ingredient spawning fields
+    private IEnumerator spawnIngredientCoroutine;
     public GameObject BunPrefab; //TODO there's gotta be a better way to load these
     public GameObject PattyPrefab; //otherwise just move it all to a factory
     public GameObject LettucePrefab;
@@ -61,12 +56,22 @@ public class GameController : MonoBehaviour {
         playerCamera = GetComponent<Camera>();
         Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
         targetOffsetDirection = pickRandomCannonDirection();
+        spawnIngredientCoroutine = shootIngredientAtIntervals(SPAWN_TIME);
     }
 
     // Use this for initialization
     void Start () {
         Debug.Log("HALFWAY PIXEL" +halfwayXPixel);
-        StartCoroutine(shootIngredientAtIntervals(SPAWN_TIME));
+    }
+
+    public void StartShooting()
+    {
+        StartCoroutine(spawnIngredientCoroutine);
+    }
+
+    public void StopShooting()
+    {
+        StopCoroutine(spawnIngredientCoroutine);
     }
 
     // Update is called once per frame
@@ -80,7 +85,6 @@ public class GameController : MonoBehaviour {
         //Debug.DrawRay(Cannon.transform.position, newDir, Color.red, 5.0f);
     }
 
-    
 
     private Vector3 getCannonTargetAroundCamera(Direction direction)
     {
@@ -162,4 +166,5 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    
 }

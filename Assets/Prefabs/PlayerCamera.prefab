@@ -196,9 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cannon: {fileID: 0}
-  segments: 25
-  radius: 32.3
-  borderline: {fileID: 0}
   BunPrefab: {fileID: 1759105196724998, guid: 29e173661c95a83469f8a11214adc963, type: 2}
   PattyPrefab: {fileID: 1644301134268778, guid: 7aebb8fef1e2efa4d96ee100ed4d1eb7,
     type: 2}
