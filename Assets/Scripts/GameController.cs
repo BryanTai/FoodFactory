@@ -5,8 +5,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class GameController : MonoBehaviour {
-
-    public Player player;
     private System.Random rnd;
     private int halfwayXPixel;
 
@@ -18,8 +16,8 @@ public class GameController : MonoBehaviour {
     float rotateSpeed = 0.5f;
     enum Direction { up, down, left, right }
     Direction targetOffsetDirection;
-    float verticalOffset = 20; //TODO adjust these
-    float horizontalOffset = 20;
+    float verticalOffset = 15; //TODO adjust these
+    float horizontalOffset = 50;
 
     //Borderline fields
     [Range(0, 50)]
@@ -33,7 +31,9 @@ public class GameController : MonoBehaviour {
     //Ingredient launching fields
     public Vector3 cannonPosition;
     private const float HEAVY_GRAVITY = -80f;
+    private const float NO_GRAVITY = 0;
     private const float SPAWN_TIME = 2f;
+    float ingredientLaunchSpeed = 20;
 
     //Ingredient spawning fields
     public GameObject BunPrefab; //TODO there's gotta be a better way to load these
@@ -56,51 +56,31 @@ public class GameController : MonoBehaviour {
 
     void Awake()
     {
-        CreatePoints();
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
         playerCamera = GetComponent<Camera>();
-        Physics.gravity = new Vector3(0, HEAVY_GRAVITY, 0);
+        Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
         targetOffsetDirection = pickRandomCannonDirection();
     }
 
     // Use this for initialization
     void Start () {
-        SendPositionsToPlayerAndFactory();
         Debug.Log("HALFWAY " +halfwayXPixel);
-        player.MovePlayerClockwise(); //TODO just to get the player onto the borderline
         cannonPosition = IngredientSpawnPosition.position; //TODO this is the top of the factory, find a better way to get this value
 
         StartCoroutine(shootIngredientAtIntervals(SPAWN_TIME));
     }
 
-    private void SendPositionsToPlayerAndFactory()
-    {
-        player.positions = playerPositions;
-        borderline.positions = playerPositions;
-    }
-
     // Update is called once per frame
     void Update () {
-        /* 
-        if(Input.touchCount > 0)
-        {
-            handleTouches();
-        }*/
-
-        //Print camera coordinates (for testing)
         Vector3 targetPos = getCannonTargetAroundCamera(targetOffsetDirection);
-        //Debug.Log("Camera : " + targetPos);
         Vector3 targetDir = targetPos - Cannon.transform.position;
         float step = rotateSpeed * Time.deltaTime;
 
         Vector3 newDir = Vector3.RotateTowards(Cannon.transform.forward, targetDir, step, 0.0f);
         Cannon.transform.rotation = Quaternion.LookRotation(newDir);
         //Debug.DrawRay(Cannon.transform.position, newDir, Color.red, 5.0f);
-
-        //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
-        //handleKeys();
     }
 
     
@@ -130,50 +110,11 @@ public class GameController : MonoBehaviour {
     //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
     private void handleKeys()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            player.MovePlayerClockwise();
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            player.MovePlayerCounterClockwise();
-        }
     }
 
     private void handleTouches()
     {
         Touch newTouch = Input.GetTouch(0);
-
-        if (newTouch.position.x < halfwayXPixel)
-        {
-            player.MovePlayerClockwise();
-        } else
-        {
-            player.MovePlayerCounterClockwise();
-        }
-
-    }
-
-    //Borrowed from https://gamedev.stackexchange.com/questions/126427/draw-circle-around-gameobject-to-indicate-radius
-    void CreatePoints()
-    {
-        float x;
-        float y = 1;
-        float z;
-
-        float angle = 20f;
-
-        playerPositions = new Vector3[(segments + 1)];
-
-        for (int i = 0; i < (segments + 1); i++)
-        {
-            x = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
-            z = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
-
-            playerPositions[i] = new Vector3(x, y, z);
-
-            angle += (360f / segments);
-        }
     }
 
     //Ingredient launching code
@@ -191,13 +132,17 @@ public class GameController : MonoBehaviour {
 
     private void shootIngredient()
     {
-        Vector3 randomDestination = pickRandomPlayerPosition();
-        Vector3 initVelocity = calculateBallisticVelocity(randomDestination);
-
         GameObject newIngredient = pickRandomIngredient();
         newIngredient.transform.position = cannonPosition;
+        Vector3 targetDestination = getCannonTargetAroundCamera(targetOffsetDirection); //Just need to get the position once, this ingredient is going in a straight line
+        newIngredient.transform.LookAt(targetDestination);
+
+        
+        Vector3 initVelocity = newIngredient.transform.forward * ingredientLaunchSpeed;
+
         newIngredient.GetComponent<Rigidbody>().velocity = initVelocity;
-        //Debug.Log("initVelocity: " + initVelocity);
+
+        Debug.Log("initVelocity: " + initVelocity);
     }
 
     private GameObject pickRandomIngredient()
@@ -219,23 +164,4 @@ public class GameController : MonoBehaviour {
         }
     }
 
-
-    private Vector3 calculateBallisticVelocity(Vector3 destination)
-    {
-        Vector3 direction = destination - cannonPosition;
-        float heightDifference = direction.y;
-        direction.y = 0;
-        float distance = direction.magnitude;
-        float angle = 80 * Mathf.Deg2Rad; //TODO Hardcoded 80 degree angle
-        direction.y = distance * Mathf.Tan(angle); //set direction to the elevation angle
-        distance += heightDifference / Mathf.Tan(angle); //Correction for height difference
-
-        float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * angle));
-        return velocity * direction.normalized;
-    }
-
-    private Vector3 pickRandomPlayerPosition()
-    {
-        return playerPositions[rnd.Next(segments + 1)];
-    }
 }
