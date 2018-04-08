@@ -29,7 +29,6 @@ public class GameController : MonoBehaviour {
     
 
     //Ingredient launching fields
-    public Vector3 cannonPosition;
     private const float HEAVY_GRAVITY = -80f;
     private const float NO_GRAVITY = 0;
     private const float SPAWN_TIME = 2f;
@@ -40,7 +39,7 @@ public class GameController : MonoBehaviour {
     public GameObject PattyPrefab; //otherwise just move it all to a factory
     public GameObject LettucePrefab;
     public GameObject TomatoPrefab;
-    public Transform IngredientSpawnPosition;
+    public Transform IngredientSpawnPoint;
 
     public enum IngredientType
     {
@@ -66,9 +65,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Debug.Log("HALFWAY " +halfwayXPixel);
-        cannonPosition = IngredientSpawnPosition.position; //TODO this is the top of the factory, find a better way to get this value
-
+        Debug.Log("HALFWAY PIXEL" +halfwayXPixel);
         StartCoroutine(shootIngredientAtIntervals(SPAWN_TIME));
     }
 
@@ -123,17 +120,18 @@ public class GameController : MonoBehaviour {
     {
         while (true)
         {
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(waitTime/2);
             shootIngredient();
+            yield return new WaitForSeconds(waitTime/2);
             targetOffsetDirection = pickRandomCannonDirection();
-            Debug.Log(targetOffsetDirection);
+            //Debug.Log(targetOffsetDirection);
         }
     }
 
     private void shootIngredient()
     {
         GameObject newIngredient = pickRandomIngredient();
-        newIngredient.transform.position = cannonPosition;
+        newIngredient.transform.position = IngredientSpawnPoint.position;
         Vector3 targetDestination = getCannonTargetAroundCamera(targetOffsetDirection); //Just need to get the position once, this ingredient is going in a straight line
         newIngredient.transform.LookAt(targetDestination);
 
@@ -142,7 +140,7 @@ public class GameController : MonoBehaviour {
 
         newIngredient.GetComponent<Rigidbody>().velocity = initVelocity;
 
-        Debug.Log("initVelocity: " + initVelocity);
+        //Debug.Log("initVelocity: " + initVelocity);
     }
 
     private GameObject pickRandomIngredient()
