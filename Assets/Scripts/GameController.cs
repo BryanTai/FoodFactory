@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
     private const float HEAVY_GRAVITY = -80f;
     private const float NO_GRAVITY = 0;
     private const float SPAWN_TIME = 2f;
-    float ingredientLaunchSpeed = 20;
+    float ingredientLaunchSpeed = 30;
 
     //Ingredient spawning fields
     private IEnumerator spawnIngredientCoroutine;
@@ -80,9 +80,13 @@ public class GameController : MonoBehaviour
         Vector3 newDir = Vector3.RotateTowards(Cannon.transform.forward, targetDir, step, 0.0f);
         Cannon.transform.rotation = Quaternion.LookRotation(newDir);
         //Debug.DrawRay(Cannon.transform.position, newDir, Color.red, 5.0f);
+
+        //TODO For Debugging Purposes
+        //handleTouches();
     }
     #endregion // UNITY_METHODS
 
+    #region ON_EVENT_CODE
     public void HandleImageTargetDetected()
     {
         timer.StartTimer();
@@ -119,6 +123,7 @@ public class GameController : MonoBehaviour
         canvasController.ResetAllIcons();
         acquiredIngredients = new bool[totalIngredientTypes];
     }
+    #endregion //ON_EVENT_CODE
 
     #region AIM_CANNON_CODE
     private Vector3 getCannonTargetAroundCamera(Direction direction)
@@ -202,7 +207,18 @@ public class GameController : MonoBehaviour
 
     private void handleTouches()
     {
-        Touch newTouch = Input.GetTouch(0);
+        //Touch newTouch = Input.GetTouch(0);
+        if(Input.touchCount > 0)
+        {
+            Debug.Log(getDistanceFromCannonToCamera());
+        }
+    }
+
+    private float getDistanceFromCannonToCamera()
+    {
+        return Vector3.Distance(playerCamera.transform.position, IngredientSpawnPoint.transform.position);
     }
     #endregion // DEBUG_CODE
+
+
 }

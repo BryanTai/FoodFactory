@@ -14,11 +14,22 @@ public enum IngredientType
 public class Ingredient : MonoBehaviour {
 
     public IngredientType ingredientType { get; set; }
+    private float lifetimeSeconds = 6; //TODO fiddle with this
 
 	// Use this for initialization
 	void Start () {
 		
 	}
+
+    private void Update()
+    {
+        lifetimeSeconds -= Time.deltaTime;
+        //TODO fade or blink when ingredient nears the end of it's lifetime
+        if (lifetimeSeconds < 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
