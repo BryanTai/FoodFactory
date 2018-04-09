@@ -40,6 +40,8 @@ public class GameController : MonoBehaviour
 
     //Canvas UI fields
     private CanvasController canvasController;
+    //Game Logic fields
+    private bool[] acquiredIngredients; //TODO make this a Dictionary with IngredientTypes and counts
     #endregion
 
     #region ENUMS
@@ -56,6 +58,7 @@ public class GameController : MonoBehaviour
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
+        acquiredIngredients = new bool[totalIngredientTypes];
         
         Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
         targetOffsetDirection = pickRandomCannonDirection();
@@ -82,8 +85,27 @@ public class GameController : MonoBehaviour
     public void HandlePlayerIngredientCollision(IngredientType ingredientType)
     {
         int iconIndex = (int)ingredientType;
+        acquiredIngredients[iconIndex] = true;
         canvasController.ActivateIcon(iconIndex);
+
+        bool allIngredientsAcquired = true;
+        foreach(bool b in acquiredIngredients)
+        {
+            allIngredientsAcquired = allIngredientsAcquired && b;
+        }
+
+        if (allIngredientsAcquired)
+        {
+            handleAllIngredientsAcquired();
+        }
         //TODO count score here
+    }
+
+    private void handleAllIngredientsAcquired()
+    {
+        Debug.Log("All Ingredients Acquired!");
+        canvasController.ResetAllIcons();
+        acquiredIngredients = new bool[totalIngredientTypes];
     }
 
     #region AIM_CANNON_CODE

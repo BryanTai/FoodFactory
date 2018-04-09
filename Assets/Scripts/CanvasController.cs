@@ -27,7 +27,7 @@ public class CanvasController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        resetAllIcons();
+        ResetAllIcons();
 	}
 
     public void ActivateIcon(int index)
@@ -36,7 +36,7 @@ public class CanvasController : MonoBehaviour {
         icons[index].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
     }
 
-    private void resetAllIcons()
+    public void ResetAllIcons()
     {
         foreach (Image icon in icons)
         {
