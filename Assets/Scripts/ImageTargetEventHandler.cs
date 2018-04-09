@@ -6,7 +6,7 @@ using Vuforia;
 
 //Borrowed from Vuforia/DefaultTrackableEventHandler.cs
 
-public class ImageTargetTestScript : MonoBehaviour, Vuforia.ITrackableEventHandler
+public class ImageTargetEventHandler : MonoBehaviour, Vuforia.ITrackableEventHandler
 {
     private TrackableBehaviour mTrackableBehaviour;
     public GameController gameController;
