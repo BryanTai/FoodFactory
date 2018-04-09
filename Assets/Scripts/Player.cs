@@ -17,6 +17,8 @@ public class Player : MonoBehaviour {
     {
         IngredientType scoredType = collision.gameObject.GetComponent<Ingredient>().ingredientType;
 
+        gameContoller.HandlePlayerIngredientCollision(scoredType);
+
         Debug.Log("Player collided with " + scoredType.ToString());
     }
 }

@@ -8,6 +8,7 @@ using Vuforia;
 public class GameController : MonoBehaviour
 {
     #region FIELDS
+    //General game fields
     private System.Random rnd;
     private int halfwayXPixel;
 
@@ -37,7 +38,7 @@ public class GameController : MonoBehaviour
     public Transform IngredientSpawnPoint;
     private int totalIngredientTypes;
 
-    //Canvas fields
+    //Canvas UI fields
     private CanvasController canvasController;
     #endregion
 
@@ -78,14 +79,11 @@ public class GameController : MonoBehaviour
     }
     #endregion // UNITY_METHODS
 
-    //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
-    private void handleKeys()
+    public void HandlePlayerIngredientCollision(IngredientType ingredientType)
     {
-    }
-
-    private void handleTouches()
-    {
-        Touch newTouch = Input.GetTouch(0);
+        int iconIndex = (int)ingredientType;
+        canvasController.ActivateIcon(iconIndex);
+        //TODO count score here
     }
 
     #region AIM_CANNON_CODE
@@ -172,4 +170,15 @@ public class GameController : MonoBehaviour
     }
     #endregion // INGREDIENT_LAUNCH_CODE
 
+    #region DEBUG_CODE
+    //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
+    private void handleKeys()
+    {
+    }
+
+    private void handleTouches()
+    {
+        Touch newTouch = Input.GetTouch(0);
+    }
+    #endregion // DEBUG_CODE
 }
