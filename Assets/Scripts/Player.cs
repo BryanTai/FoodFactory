@@ -2,36 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class Player : MonoBehaviour {
 
-    public Vector3[] positions;
-    int currentPositionIndex;
+    private GameController gameContoller;
 
-    private int halfwayYPixel;
 
 	// Use this for initialization
 	void Start () {
-        currentPositionIndex = 0;
+        gameContoller = transform.parent.gameObject.GetComponent<GameController>();
     }
 
-    public void MovePlayerClockwise()
+    private void OnCollisionEnter(Collision collision)
     {
-        currentPositionIndex++;
-        if (currentPositionIndex > positions.Length - 1)
-        {
-            currentPositionIndex = 0;
-        }
-        gameObject.transform.position = positions[currentPositionIndex];
-    }
+        IngredientType scoredType = collision.gameObject.GetComponent<Ingredient>().ingredientType;
 
-    public void MovePlayerCounterClockwise()
-    {
-        currentPositionIndex--;
-        if (currentPositionIndex < 0 )
-        {
-            currentPositionIndex = positions.Length - 1;
-        }
-        gameObject.transform.position = positions[currentPositionIndex];
+        Debug.Log("Player collided with " + scoredType.ToString());
     }
-    
 }

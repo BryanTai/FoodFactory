@@ -42,13 +42,7 @@ public class GameController : MonoBehaviour
     #endregion
 
     #region ENUMS
-    public enum IngredientType
-    {
-        bun,
-        patty,
-        lettuce,
-        tomato
-    }
+    
     enum Direction { up, down, left, right }
     #endregion
 
@@ -135,16 +129,15 @@ public class GameController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(waitTime/2);
-            shootIngredient();
+            shootIngredient(pickRandomIngredient());
             yield return new WaitForSeconds(waitTime/2);
             targetOffsetDirection = pickRandomCannonDirection();
             //Debug.Log(targetOffsetDirection);
         }
     }
 
-    private void shootIngredient()
+    private void shootIngredient(GameObject newIngredient)
     {
-        GameObject newIngredient = pickRandomIngredient();
         newIngredient.transform.position = IngredientSpawnPoint.position;
         //Just need to get the position once, this ingredient is going in a straight line
         Vector3 targetDestination = getCannonTargetAroundCamera(targetOffsetDirection); 
@@ -159,19 +152,23 @@ public class GameController : MonoBehaviour
     {
         int index = rnd.Next(totalIngredientTypes);
         IngredientType nextType = (IngredientType)index;
+
+        GameObject newIngredient;
         switch (nextType)
         {
             case IngredientType.bun:
-                return Instantiate(BunPrefab);
+                newIngredient = Instantiate(BunPrefab); break;
             case IngredientType.patty:
-                return Instantiate(PattyPrefab);
+                newIngredient = Instantiate(PattyPrefab); break;
             case IngredientType.lettuce:
-                return Instantiate(LettucePrefab);
+                newIngredient = Instantiate(LettucePrefab); break;
             case IngredientType.tomato:
-                return Instantiate(TomatoPrefab);
+                newIngredient = Instantiate(TomatoPrefab); break;
             default:
                 throw new ArgumentException();
         }
+        newIngredient.GetComponent<Ingredient>().ingredientType = nextType;
+        return newIngredient;
     }
     #endregion // INGREDIENT_LAUNCH_CODE
 

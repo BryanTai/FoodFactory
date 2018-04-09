@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum IngredientType
+{
+    bun,
+    patty,
+    lettuce,
+    tomato
+}
+
 [RequireComponent(typeof(Collider))]
 public class Ingredient : MonoBehaviour {
+
+    public IngredientType ingredientType { get; set; }
 
 	// Use this for initialization
 	void Start () {

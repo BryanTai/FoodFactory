@@ -14,7 +14,7 @@ public class CanvasController : MonoBehaviour {
     private Image[] icons;
     private int iconCount = 4;
 
-    float dimAlpha = 0.5f;
+    private const float DIM_ALPHA = 0.5f;
 
     void Awake()
     {
@@ -27,10 +27,21 @@ public class CanvasController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		foreach(Image icon in icons)
-        {
-            icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, dimAlpha);
-        }
+        resetAllIcons();
 	}
+
+    public void ActivateIcon(int index)
+    {
+        Color oldColor = icons[index].color;
+        icons[index].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
+    }
+
+    private void resetAllIcons()
+    {
+        foreach (Image icon in icons)
+        {
+            icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, DIM_ALPHA);
+        }
+    }
 
 }
