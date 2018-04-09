@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 
     private float startTime;
     public float timeLeftSeconds { get; set; }
-    private bool gameOver = false;
+    private bool stopTimer = true;
     private const int FLASHING_TIME = 10;
     private bool timerIsStillWhite = true;
 
@@ -18,9 +18,14 @@ public class Timer : MonoBehaviour
         timeLeftSeconds = 60; //TODO Load this from GameController or something
     }
 
+    public void StartTimer()
+    {
+        stopTimer = false;
+    }
+
     void Update()
     {
-        if (gameOver)
+        if (stopTimer)
         {
             return;
         }
@@ -46,9 +51,11 @@ public class Timer : MonoBehaviour
         if (timeLeftSeconds < 0)
         {
             Debug.Log("GAME OVER!!!");
-            gameOver = true;
+            stopTimer = true;
             //TODO
             //UnityEngine.SceneManagement.SceneManager.LoadScene("LevelComplete");
         }
     }
+
+    
 }

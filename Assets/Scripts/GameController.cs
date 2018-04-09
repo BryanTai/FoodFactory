@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     //General game fields
     private System.Random rnd;
     private int halfwayXPixel;
+    public Timer timer;
 
     //Vuforia Player Camera fields
     private Camera playerCamera;
@@ -82,6 +83,17 @@ public class GameController : MonoBehaviour
     }
     #endregion // UNITY_METHODS
 
+    public void HandleImageTargetDetected()
+    {
+        timer.StartTimer();
+        StartCoroutine(spawnIngredientCoroutine);
+    }
+
+    public void HandleImageTargetLost()
+    {
+        StopCoroutine(spawnIngredientCoroutine);
+    }
+
     public void HandlePlayerIngredientCollision(IngredientType ingredientType)
     {
         int iconIndex = (int)ingredientType;
@@ -133,16 +145,6 @@ public class GameController : MonoBehaviour
     #endregion // AIM_CANNON_CODE
 
     #region INGREDIENT_LAUNCH_CODE
-
-    public void StartShooting()
-    {
-        StartCoroutine(spawnIngredientCoroutine);
-    }
-
-    public void StopShooting()
-    {
-        StopCoroutine(spawnIngredientCoroutine);
-    }
 
     private IEnumerator shootIngredientAtIntervals(float waitTime)
     {

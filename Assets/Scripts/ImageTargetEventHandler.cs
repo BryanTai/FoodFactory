@@ -47,13 +47,13 @@ public class ImageTargetEventHandler : MonoBehaviour, Vuforia.ITrackableEventHan
     private void OnTrackingFound()
     {
         Debug.Log("Start shooting ingredients!");
-        gameController.StartShooting();
+        gameController.HandleImageTargetDetected();
     }
 
     private void OnTrackingLost()
     {
         Debug.Log("Stop shooting ingredients!");
-        gameController.StopShooting();
+        gameController.HandleImageTargetLost();
     }
 
     
