@@ -7,17 +7,17 @@ using Vuforia;
 [RequireComponent(typeof(Camera))]
 public class GameController : MonoBehaviour
 {
+    #region FIELDS
     private System.Random rnd;
     private int halfwayXPixel;
 
-    //Vuforia Camera fields
+    //Vuforia Player Camera fields
     private Camera playerCamera;
-    
+    private GameObject playerCollider;
 
     //Cannon fields
     public GameObject Cannon;
     float rotateSpeed = 0.5f;
-    enum Direction { up, down, left, right }
     Direction targetOffsetDirection;
     float verticalOffset = 15; //TODO adjust these
     float horizontalOffset = 50;
@@ -35,7 +35,13 @@ public class GameController : MonoBehaviour
     public GameObject LettucePrefab;
     public GameObject TomatoPrefab;
     public Transform IngredientSpawnPoint;
+    private int totalIngredientTypes;
 
+    //Canvas fields
+    private CanvasController canvasController;
+    #endregion
+
+    #region ENUMS
     public enum IngredientType
     {
         bun,
@@ -43,17 +49,19 @@ public class GameController : MonoBehaviour
         lettuce,
         tomato
     }
+    enum Direction { up, down, left, right }
+    #endregion
 
-    private int totalIngredientTypes;
-
-    
-
+    #region UNITY_METHODS
     void Awake()
     {
+        playerCamera = GetComponent<Camera>();
+        canvasController = GetComponent<CanvasController>();
+
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
-        playerCamera = GetComponent<Camera>();
+        
         Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
         targetOffsetDirection = pickRandomCannonDirection();
         spawnIngredientCoroutine = shootIngredientAtIntervals(SPAWN_TIME);
@@ -62,16 +70,6 @@ public class GameController : MonoBehaviour
     // Use this for initialization
     void Start () {
         Debug.Log("HALFWAY PIXEL" +halfwayXPixel);
-    }
-
-    public void StartShooting()
-    {
-        StartCoroutine(spawnIngredientCoroutine);
-    }
-
-    public void StopShooting()
-    {
-        StopCoroutine(spawnIngredientCoroutine);
     }
 
     // Update is called once per frame
@@ -84,13 +82,24 @@ public class GameController : MonoBehaviour
         Cannon.transform.rotation = Quaternion.LookRotation(newDir);
         //Debug.DrawRay(Cannon.transform.position, newDir, Color.red, 5.0f);
     }
+    #endregion // UNITY_METHODS
 
+    //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
+    private void handleKeys()
+    {
+    }
 
+    private void handleTouches()
+    {
+        Touch newTouch = Input.GetTouch(0);
+    }
+
+    #region AIM_CANNON_CODE
     private Vector3 getCannonTargetAroundCamera(Direction direction)
     {
         switch (direction)
         {
-            case (Direction.up): 
+            case (Direction.up):
                 return playerCamera.transform.position + (transform.up * verticalOffset);
             case (Direction.down):
                 return playerCamera.transform.position + (-transform.up * verticalOffset);
@@ -107,18 +116,19 @@ public class GameController : MonoBehaviour
     {
         return (Direction)rnd.Next(4);
     }
+    #endregion // AIM_CANNON_CODE
 
-    //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
-    private void handleKeys()
+    #region INGREDIENT_LAUNCH_CODE
+
+    public void StartShooting()
     {
+        StartCoroutine(spawnIngredientCoroutine);
     }
 
-    private void handleTouches()
+    public void StopShooting()
     {
-        Touch newTouch = Input.GetTouch(0);
+        StopCoroutine(spawnIngredientCoroutine);
     }
-
-    //Ingredient launching code
 
     private IEnumerator shootIngredientAtIntervals(float waitTime)
     {
@@ -136,14 +146,12 @@ public class GameController : MonoBehaviour
     {
         GameObject newIngredient = pickRandomIngredient();
         newIngredient.transform.position = IngredientSpawnPoint.position;
-        Vector3 targetDestination = getCannonTargetAroundCamera(targetOffsetDirection); //Just need to get the position once, this ingredient is going in a straight line
+        //Just need to get the position once, this ingredient is going in a straight line
+        Vector3 targetDestination = getCannonTargetAroundCamera(targetOffsetDirection); 
         newIngredient.transform.LookAt(targetDestination);
 
-        
         Vector3 initVelocity = newIngredient.transform.forward * ingredientLaunchSpeed;
-
         newIngredient.GetComponent<Rigidbody>().velocity = initVelocity;
-
         //Debug.Log("initVelocity: " + initVelocity);
     }
 
@@ -165,6 +173,6 @@ public class GameController : MonoBehaviour
                 throw new ArgumentException();
         }
     }
+    #endregion // INGREDIENT_LAUNCH_CODE
 
-    
 }
