@@ -5,20 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Player : MonoBehaviour {
 
-    private GameController gameContoller;
+    private GameController gameController;
 
 
 	// Use this for initialization
 	void Start () {
-        gameContoller = transform.parent.gameObject.GetComponent<GameController>();
+        gameController = transform.parent.gameObject.GetComponent<GameController>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        IngredientType scoredType = collision.gameObject.GetComponent<Ingredient>().ingredientType;
+        gameController.HandlePlayerFoodCollision(collision.gameObject);
 
-        gameContoller.HandlePlayerIngredientCollision(scoredType);
-
-        Debug.Log("Player collided with " + scoredType.ToString());
+        Debug.Log("Player collided with " + collision.gameObject.name);
     }
 }

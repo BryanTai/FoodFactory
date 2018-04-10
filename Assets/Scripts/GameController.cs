@@ -31,13 +31,15 @@ public class GameController : MonoBehaviour
     float ingredientLaunchSpeed = 30;
 
     //Ingredient spawning fields
-    private IEnumerator spawnIngredientCoroutine;
+    private IEnumerator spawnFoodCoroutine;
     public GameObject BunPrefab; //TODO there's gotta be a better way to load these
     public GameObject PattyPrefab; //otherwise just move it all to a factory
     public GameObject LettucePrefab;
     public GameObject TomatoPrefab;
-    public Transform IngredientSpawnPoint;
+    public GameObject BurgerPrefab;
+    public Transform FoodSpawnPoint;
     private int totalIngredientTypes;
+    private bool launchMealNext;
 
     //Canvas UI fields
     private CanvasController canvasController;
@@ -62,8 +64,8 @@ public class GameController : MonoBehaviour
         acquiredIngredients = new bool[totalIngredientTypes];
         
         Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
-        targetOffsetDirection = pickRandomCannonDirection();
-        spawnIngredientCoroutine = shootIngredientAtIntervals(SPAWN_TIME);
+        targetOffsetDirection = chooseRandomCannonDirection();
+        spawnFoodCoroutine = launchFoodAtIntervals(SPAWN_TIME);
     }
 
     // Use this for initialization
@@ -90,22 +92,38 @@ public class GameController : MonoBehaviour
     public void HandleImageTargetDetected()
     {
         timer.StartTimer();
-        StartCoroutine(spawnIngredientCoroutine);
+        StartCoroutine(spawnFoodCoroutine);
     }
 
     public void HandleImageTargetLost()
     {
-        StopCoroutine(spawnIngredientCoroutine);
+        StopCoroutine(spawnFoodCoroutine);
     }
 
-    public void HandlePlayerIngredientCollision(IngredientType ingredientType)
+    public void HandlePlayerFoodCollision(GameObject foodObject)
     {
-        int iconIndex = (int)ingredientType;
+        Ingredient collidedIngredient = foodObject.GetComponent<Ingredient>();
+        if (collidedIngredient != null)
+        {
+            handlePlayerIngredientCollision(collidedIngredient);
+        }
+        Meal collidedMeal = foodObject.GetComponent<Meal>();
+        if(collidedMeal != null)
+        {
+            handlePlayerMealCollision(collidedMeal);
+        }
+        
+        //TODO count score here
+    }
+
+    private void handlePlayerIngredientCollision(Ingredient collidedIngredient)
+    {
+        int iconIndex = (int)collidedIngredient.ingredientType;
         acquiredIngredients[iconIndex] = true;
         canvasController.ActivateIcon(iconIndex);
 
         bool allIngredientsAcquired = true;
-        foreach(bool b in acquiredIngredients)
+        foreach (bool b in acquiredIngredients)
         {
             allIngredientsAcquired = allIngredientsAcquired && b;
         }
@@ -114,7 +132,11 @@ public class GameController : MonoBehaviour
         {
             handleAllIngredientsAcquired();
         }
-        //TODO count score here
+    }
+
+    private void handlePlayerMealCollision(Meal collidedMeal)
+    {
+        throw new NotImplementedException();
     }
 
     private void handleAllIngredientsAcquired()
@@ -143,45 +165,60 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private Direction pickRandomCannonDirection()
+    private Direction chooseRandomCannonDirection()
     {
         return (Direction)rnd.Next(4);
     }
     #endregion // AIM_CANNON_CODE
 
-    #region INGREDIENT_LAUNCH_CODE
+    #region FOOD_LAUNCH_CODE
 
-    private IEnumerator shootIngredientAtIntervals(float waitTime)
+    private IEnumerator launchFoodAtIntervals(float waitTime)
     {
         while (true)
         {
             yield return new WaitForSeconds(waitTime/2);
-            shootIngredient(pickRandomIngredient());
+
+            GameObject nextFood;
+            if (launchMealNext)
+            {
+                nextFood = createMeal(MealType.burger);
+            }
+            else
+            {
+                nextFood = createRandomIngredient();
+            }
+
+            launchFood(nextFood);
             yield return new WaitForSeconds(waitTime/2);
-            targetOffsetDirection = pickRandomCannonDirection();
+            targetOffsetDirection = chooseRandomCannonDirection();
             //Debug.Log(targetOffsetDirection);
         }
     }
 
-    private void shootIngredient(GameObject newIngredient)
+    private void launchFood(GameObject newFood)
     {
-        newIngredient.transform.position = IngredientSpawnPoint.position;
-        //Just need to get the position once, this ingredient is going in a straight line
+        newFood.transform.position = FoodSpawnPoint.position;
+        //Just need to get the position once, this food is going in a straight line
         Vector3 targetDestination = getCannonTargetAroundCamera(targetOffsetDirection); 
-        newIngredient.transform.LookAt(targetDestination);
+        newFood.transform.LookAt(targetDestination);
 
-        Vector3 initVelocity = newIngredient.transform.forward * ingredientLaunchSpeed;
-        newIngredient.GetComponent<Rigidbody>().velocity = initVelocity;
+        Vector3 initVelocity = newFood.transform.forward * ingredientLaunchSpeed;
+        newFood.GetComponent<Rigidbody>().velocity = initVelocity;
         //Debug.Log("initVelocity: " + initVelocity);
     }
 
-    private GameObject pickRandomIngredient()
+    private GameObject createRandomIngredient()
     {
         int index = rnd.Next(totalIngredientTypes);
         IngredientType nextType = (IngredientType)index;
+        return createIngredient(nextType);
+    }
 
+    private GameObject createIngredient(IngredientType ingredientType)
+    {
         GameObject newIngredient;
-        switch (nextType)
+        switch (ingredientType)
         {
             case IngredientType.bun:
                 newIngredient = Instantiate(BunPrefab); break;
@@ -194,10 +231,25 @@ public class GameController : MonoBehaviour
             default:
                 throw new ArgumentException();
         }
-        newIngredient.GetComponent<Ingredient>().ingredientType = nextType;
+        newIngredient.GetComponent<Ingredient>().ingredientType = ingredientType;
         return newIngredient;
     }
-    #endregion // INGREDIENT_LAUNCH_CODE
+
+    private GameObject createMeal(MealType mealType)
+    {
+        GameObject newMeal;
+        switch (mealType)
+        {
+            case MealType.burger:
+                newMeal = Instantiate(BurgerPrefab); break;
+            default:
+                throw new ArgumentException();
+        }
+        newMeal.GetComponent<Meal>().mealType = mealType;
+        return newMeal;
+    }
+
+    #endregion // FOOD_LAUNCH_CODE
 
     #region DEBUG_CODE
     //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
@@ -216,7 +268,7 @@ public class GameController : MonoBehaviour
 
     private float getDistanceFromCannonToCamera()
     {
-        return Vector3.Distance(playerCamera.transform.position, IngredientSpawnPoint.transform.position);
+        return Vector3.Distance(playerCamera.transform.position, FoodSpawnPoint.transform.position);
     }
     #endregion // DEBUG_CODE
 

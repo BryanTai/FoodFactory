@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Borderline
   - Ingredient
+  - Meal
   layers:
   - Default
   - TransparentFX

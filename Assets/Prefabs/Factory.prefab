@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4044381383643580}
   m_Layer: 0
-  m_Name: Ingredient Spawn Point
+  m_Name: Food Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 33427594686532862}
   - component: {fileID: 23950921408447784}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Visual Aid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
