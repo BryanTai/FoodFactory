@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
     public GameObject BurgerPrefab;
     public Transform FoodSpawnPoint;
     private int totalIngredientTypes;
-    private bool launchMealNext;
+    private bool isMealReady;
 
     //Canvas UI fields
     private CanvasController canvasController;
@@ -142,6 +142,7 @@ public class GameController : MonoBehaviour
     private void handleAllIngredientsAcquired()
     {
         Debug.Log("All Ingredients Acquired!");
+        isMealReady = true;
         canvasController.ResetAllIcons();
         acquiredIngredients = new bool[totalIngredientTypes];
     }
@@ -180,9 +181,11 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(waitTime/2);
 
             GameObject nextFood;
-            if (launchMealNext)
+            if (isMealReady)
             {
+                //TODO Add some kind of aura or particle effect 
                 nextFood = createMeal(MealType.burger);
+                isMealReady = false;
             }
             else
             {
