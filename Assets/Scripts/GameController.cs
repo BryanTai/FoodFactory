@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Vuforia;
 
 [RequireComponent(typeof(Camera))]
@@ -12,6 +13,7 @@ public class GameController : MonoBehaviour
     private System.Random rnd;
     private int halfwayXPixel;
     public Timer timer;
+    public Text ScoreText;
 
     //Player fields
     private Camera playerCamera;
@@ -115,7 +117,13 @@ public class GameController : MonoBehaviour
             handlePlayerMealCollision(collidedMeal);
         }
         Food collidedFood = foodObject.GetComponent<Food>();
-        playerScore += collidedFood.pointAward;
+        updatePlayerScore(collidedFood.pointAward);
+    }
+
+    private void updatePlayerScore(int pointsAwarded)
+    {
+        playerScore += pointsAwarded;
+        ScoreText.text = playerScore.ToString();
     }
 
     private void handlePlayerIngredientCollision(Ingredient collidedIngredient)
@@ -138,6 +146,7 @@ public class GameController : MonoBehaviour
 
     private void handlePlayerMealCollision(Meal collidedMeal)
     {
+        //TODO might not need this step
         Debug.Log("Scored a meal!");
     }
 
