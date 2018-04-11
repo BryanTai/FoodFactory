@@ -13,9 +13,10 @@ public class GameController : MonoBehaviour
     private int halfwayXPixel;
     public Timer timer;
 
-    //Vuforia Player Camera fields
+    //Player fields
     private Camera playerCamera;
     private GameObject playerCollider;
+    int playerScore;
 
     //Cannon fields
     public GameObject Cannon;
@@ -107,13 +108,14 @@ public class GameController : MonoBehaviour
         {
             handlePlayerIngredientCollision(collidedIngredient);
         }
+        //TODO is this necessary?
         Meal collidedMeal = foodObject.GetComponent<Meal>();
         if(collidedMeal != null)
         {
             handlePlayerMealCollision(collidedMeal);
         }
-        
-        //TODO count score here
+        Food collidedFood = foodObject.GetComponent<Food>();
+        playerScore += collidedFood.pointAward;
     }
 
     private void handlePlayerIngredientCollision(Ingredient collidedIngredient)
@@ -136,7 +138,7 @@ public class GameController : MonoBehaviour
 
     private void handlePlayerMealCollision(Meal collidedMeal)
     {
-        throw new NotImplementedException();
+        Debug.Log("Scored a meal!");
     }
 
     private void handleAllIngredientsAcquired()
