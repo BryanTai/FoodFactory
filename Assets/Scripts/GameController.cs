@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     private int halfwayXPixel;
     public Timer timer;
     public Text ScoreText;
+    private bool isTargetImageDetected;
 
     //Player fields
     private Camera playerCamera;
@@ -77,29 +78,31 @@ public class GameController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update () {
-        Vector3 targetPos = getCannonTargetAroundCamera(targetOffsetDirection);
-        Vector3 targetDir = targetPos - Cannon.transform.position;
-        float step = rotateSpeed * Time.deltaTime;
-
-        Vector3 newDir = Vector3.RotateTowards(Cannon.transform.forward, targetDir, step, 0.0f);
-        Cannon.transform.rotation = Quaternion.LookRotation(newDir);
-        //Debug.DrawRay(Cannon.transform.position, newDir, Color.red, 5.0f);
+    void Update ()
+    {
+        if (isTargetImageDetected)
+        {
+            aimCannon();
+        }
 
         //TODO For Debugging Purposes
         //handleTouches();
     }
+
+    
     #endregion // UNITY_METHODS
 
     #region ON_EVENT_CODE
     public void HandleImageTargetDetected()
     {
+        isTargetImageDetected = true;
         timer.StartTimer();
         StartCoroutine(spawnFoodCoroutine);
     }
 
     public void HandleImageTargetLost()
     {
+        isTargetImageDetected = false;
         StopCoroutine(spawnFoodCoroutine);
     }
 
@@ -160,6 +163,16 @@ public class GameController : MonoBehaviour
     #endregion //ON_EVENT_CODE
 
     #region AIM_CANNON_CODE
+    private void aimCannon()
+    {
+        Vector3 targetPos = getCannonTargetAroundCamera(targetOffsetDirection);
+        Vector3 targetDir = targetPos - Cannon.transform.position;
+        float step = rotateSpeed * Time.deltaTime;
+
+        Vector3 newDir = Vector3.RotateTowards(Cannon.transform.forward, targetDir, step, 0.0f);
+        Cannon.transform.rotation = Quaternion.LookRotation(newDir);
+    }
+
     private Vector3 getCannonTargetAroundCamera(Direction direction)
     {
         switch (direction)

@@ -27,13 +27,13 @@ public class ImageTargetEventHandler : MonoBehaviour, Vuforia.ITrackableEventHan
              newStatus == TrackableBehaviour.Status.TRACKED ||
              newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
         {
-            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found: " + newStatus.ToString());
             OnTrackingFound();
         }
         else if (previousStatus == TrackableBehaviour.Status.TRACKED &&
                  newStatus == TrackableBehaviour.Status.NOT_FOUND)
         {
-            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost: " + newStatus.ToString());
             OnTrackingLost();
         }
         else
@@ -41,6 +41,7 @@ public class ImageTargetEventHandler : MonoBehaviour, Vuforia.ITrackableEventHan
             // For combo of previousStatus=UNKNOWN + newStatus=UNKNOWN|NOT_FOUND
             // Vuforia is starting, but tracking has not been lost or found yet
             // Call OnTrackingLost() to hide the augmentations
+            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " is probably lost???: " + newStatus.ToString());
             OnTrackingLost();
         }
     }
