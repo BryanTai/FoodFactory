@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour {
 
+    public Canvas canvas;
+
     //TODO support a dynamic # of icons for different # of ingredients
     public Image icon_0;
     public Image icon_1;
@@ -16,6 +18,12 @@ public class CanvasController : MonoBehaviour {
 
     private const float DIM_ALPHA = 0.5f;
 
+    //Score Notification Fields
+    public GameObject ScoreAlertPrefab;
+    private Vector3 scoreAlertSpawnPoint;
+    private const float FADE_SPEED = 4f;
+    private const float WAIT_TIME = 0.5f;
+
     void Awake()
     {
         icons = new Image[iconCount];
@@ -23,6 +31,8 @@ public class CanvasController : MonoBehaviour {
         icons[1] = icon_1;
         icons[2] = icon_2;
         icons[3] = icon_3;
+
+        scoreAlertSpawnPoint = new Vector3(100, -120, 0);
     }
 
     // Use this for initialization
@@ -44,4 +54,40 @@ public class CanvasController : MonoBehaviour {
         }
     }
 
+    //Borrowed from LineSort
+    public void FlashScoreAlert(string text, Color color)
+    {
+        StartCoroutine(displayScoreAlert(text, color));
+    }
+
+    private IEnumerator displayScoreAlert(string text, Color color)
+    {
+        //Create new invisible
+        GameObject newAlert = Instantiate(ScoreAlertPrefab, scoreAlertSpawnPoint, Quaternion.identity);
+        newAlert.transform.SetParent(canvas.transform, false);
+
+        Text alertText = newAlert.GetComponent<Text>();
+        alertText.text = text;
+        alertText.color = color;
+
+        //Fade in
+        alertText.color = new Color(alertText.color.r, alertText.color.g, alertText.color.b, 0);
+        while (alertText.color.a < 1.0f)
+        {
+            alertText.color = new Color(alertText.color.r, alertText.color.g, alertText.color.b, alertText.color.a + (Time.deltaTime * FADE_SPEED));
+            yield return null;
+        }
+        //hold it
+        yield return new WaitForSeconds(WAIT_TIME);
+
+        //Fade out
+        alertText.color = new Color(alertText.color.r, alertText.color.g, alertText.color.b, 1);
+        while (alertText.color.a > 0.0f)
+        {
+            alertText.color = new Color(alertText.color.r, alertText.color.g, alertText.color.b, alertText.color.a - (Time.deltaTime * FADE_SPEED));
+            yield return null;
+        }
+
+        Destroy(newAlert);
+    }
 }

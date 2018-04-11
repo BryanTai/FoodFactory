@@ -93,6 +93,7 @@ public class GameController : MonoBehaviour
     #endregion // UNITY_METHODS
 
     #region ON_EVENT_CODE
+    //Called by ImageTargetEventHandler.cs
     public void HandleImageTargetDetected()
     {
         isTargetImageDetected = true;
@@ -106,6 +107,7 @@ public class GameController : MonoBehaviour
         StopCoroutine(spawnFoodCoroutine);
     }
 
+    //Called by Player.cs
     public void HandlePlayerFoodCollision(GameObject foodObject)
     {
         Ingredient collidedIngredient = foodObject.GetComponent<Ingredient>();
@@ -113,7 +115,7 @@ public class GameController : MonoBehaviour
         {
             handlePlayerIngredientCollision(collidedIngredient);
         }
-        //TODO is this necessary?
+        //TODO is detecting Meal collisions necessary?
         Meal collidedMeal = foodObject.GetComponent<Meal>();
         if(collidedMeal != null)
         {
@@ -145,12 +147,17 @@ public class GameController : MonoBehaviour
         {
             handleAllIngredientsAcquired();
         }
+        //TODO maybe move this to CanvasController?
+        string scoreText = string.Format("+{0}", collidedIngredient.pointAward);
+        canvasController.FlashScoreAlert(scoreText, Color.white);
     }
 
     private void handlePlayerMealCollision(Meal collidedMeal)
     {
         //TODO might not need this step
         Debug.Log("Scored a meal!");
+        string scoreText = string.Format("+{0}!", collidedMeal.pointAward);
+        canvasController.FlashScoreAlert(scoreText, Color.green);
     }
 
     private void handleAllIngredientsAcquired()
