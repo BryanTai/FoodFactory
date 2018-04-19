@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     private int halfwayXPixel;
     public Timer timer;
     public Text ScoreText;
-    private bool isTargetImageDetected;
+    public GameStateHandler StateHandler;
 
     //Player fields
     private Camera playerCamera;
@@ -64,6 +64,7 @@ public class GameController : MonoBehaviour
 
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
+        StateHandler.OnStart();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
         acquiredIngredients = new bool[totalIngredientTypes];
         
@@ -80,7 +81,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if (isTargetImageDetected)
+        if (StateHandler.CurrentGameState == GameState.Detected)
         {
             aimCannon();
         }
@@ -96,15 +97,20 @@ public class GameController : MonoBehaviour
     //Called by ImageTargetEventHandler.cs
     public void HandleImageTargetDetected()
     {
-        isTargetImageDetected = true;
-        timer.StartTimer();
-        StartCoroutine(spawnFoodCoroutine);
+        StateHandler.SetCurrentState(GameState.Detected);
+        if (StateHandler.CurrentGameState.InGame()) {
+            timer.StartTimer();
+            StartCoroutine(spawnFoodCoroutine);
+        }
     }
 
     public void HandleImageTargetLost()
     {
-        isTargetImageDetected = false;
-        StopCoroutine(spawnFoodCoroutine);
+        StateHandler.SetCurrentState(GameState.NotDetected);
+        if (StateHandler.CurrentGameState.InGame())
+        {
+            StopCoroutine(spawnFoodCoroutine);
+        }
     }
 
     //Called by Player.cs

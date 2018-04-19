@@ -16,6 +16,10 @@ public class CanvasController : MonoBehaviour {
     private Image[] icons;
     private int iconCount = 4;
 
+    public Image TitleScreen;
+    public Image IntroBackground;
+    public Image IntroPhone;
+
     private const float DIM_ALPHA = 0.5f;
 
     //Score Notification Fields
