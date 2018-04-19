@@ -33,7 +33,7 @@ public class GameStateHandler
 {
     public GameState CurrentGameState { get; private set; }
 
-    public void OnStart()
+    public GameStateHandler()
     {
         CurrentGameState = GameState.Intro;
     }

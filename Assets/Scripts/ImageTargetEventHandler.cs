@@ -23,7 +23,7 @@ public class ImageTargetEventHandler : MonoBehaviour, Vuforia.ITrackableEventHan
 
     public void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
     {
-        if(gameController.CurrentState == GameState.Intro)
+        if(gameController.GetGameState() == GameState.Intro)
         {
             return;
         }

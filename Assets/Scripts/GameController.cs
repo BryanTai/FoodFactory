@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     private int halfwayXPixel;
     public Timer timer;
     public Text ScoreText;
-    public GameStateHandler StateHandler;
+    private GameStateHandler gameStateHandler;
 
     //Player fields
     private Camera playerCamera;
@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
 
         halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
-        StateHandler.OnStart();
+        gameStateHandler = new GameStateHandler();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
         acquiredIngredients = new bool[totalIngredientTypes];
         
@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if (StateHandler.CurrentGameState == GameState.Detected)
+        if (gameStateHandler.CurrentGameState == GameState.Detected)
         {
             aimCannon();
         }
@@ -97,8 +97,8 @@ public class GameController : MonoBehaviour
     //Called by ImageTargetEventHandler.cs
     public void HandleImageTargetDetected()
     {
-        StateHandler.SetCurrentState(GameState.Detected);
-        if (StateHandler.CurrentGameState.InGame()) {
+        gameStateHandler.SetCurrentState(GameState.Detected);
+        if (gameStateHandler.CurrentGameState.InGame()) {
             timer.StartTimer();
             StartCoroutine(spawnFoodCoroutine);
         }
@@ -106,8 +106,8 @@ public class GameController : MonoBehaviour
 
     public void HandleImageTargetLost()
     {
-        StateHandler.SetCurrentState(GameState.NotDetected);
-        if (StateHandler.CurrentGameState.InGame())
+        gameStateHandler.SetCurrentState(GameState.NotDetected);
+        if (gameStateHandler.CurrentGameState.InGame())
         {
             StopCoroutine(spawnFoodCoroutine);
         }
@@ -172,6 +172,11 @@ public class GameController : MonoBehaviour
         isMealReady = true;
         canvasController.ResetAllIcons();
         acquiredIngredients = new bool[totalIngredientTypes];
+    }
+
+    public GameState GetGameState()
+    {
+        return gameStateHandler.CurrentGameState;
     }
     #endregion //ON_EVENT_CODE
 
