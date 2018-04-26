@@ -11,10 +11,13 @@ public class GameController : MonoBehaviour
     #region FIELDS
     //General game fields
     private System.Random rnd;
-    private int halfwayXPixel;
     public Timer timer;
     public Text ScoreText;
     private GameStateHandler gameStateHandler;
+
+    //Intro fields
+    private const int TOTAL_INTRO_SCREENS = 2;
+    private int currentIntroScreen;
 
     //Player fields
     private Camera playerCamera;
@@ -30,7 +33,7 @@ public class GameController : MonoBehaviour
     
     //Ingredient launching fields
     private const float HEAVY_GRAVITY = -80f;
-    private const float NO_GRAVITY = 0;
+    private const float NO_GRAVITY = 0; //TODO just disable gravity entirely :I
     private const float SPAWN_TIME = 2f;
     float ingredientLaunchSpeed = 30;
 
@@ -62,12 +65,12 @@ public class GameController : MonoBehaviour
         playerCamera = GetComponent<Camera>();
         canvasController = GetComponent<CanvasController>();
 
-        halfwayXPixel = Screen.width / 2;
         rnd = new System.Random();
         gameStateHandler = new GameStateHandler();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
         acquiredIngredients = new bool[totalIngredientTypes];
-        
+        currentIntroScreen = 0;
+
         Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
         targetOffsetDirection = chooseRandomCannonDirection();
         spawnFoodCoroutine = launchFoodAtIntervals(SPAWN_TIME);
@@ -75,13 +78,18 @@ public class GameController : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-        Debug.Log("HALFWAY PIXEL" +halfwayXPixel);
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if (gameStateHandler.CurrentGameState == GameState.Detected)
+        if(GetGameState() == GameState.Intro)
+        {
+            handleIntroTouches();
+            handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
+        }
+        
+        if (GetGameState() == GameState.Detected)
         {
             aimCannon();
         }
@@ -90,10 +98,16 @@ public class GameController : MonoBehaviour
         //handleTouches();
     }
 
-    
+
     #endregion // UNITY_METHODS
 
     #region ON_EVENT_CODE
+
+    private void handleIntroTouches()
+    {
+        //TODO SEE DEBUG CODE handleKeys
+    }
+
     //Called by ImageTargetEventHandler.cs
     public void HandleImageTargetDetected()
     {
@@ -300,6 +314,19 @@ public class GameController : MonoBehaviour
     //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
     private void handleKeys()
     {
+        if (Input.GetKeyDown("1"))
+        {
+            canvasController.FadeIntroScreen();
+        }
+        if (Input.GetKeyDown("2"))
+        {
+            canvasController.FadeInstructionScreen();
+
+        }
+        if (Input.GetKeyDown("3"))
+        {
+            gameStateHandler.SetStateToInGame();
+        }
     }
 
     private void handleTouches()

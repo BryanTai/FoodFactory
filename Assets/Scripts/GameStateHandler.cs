@@ -38,8 +38,14 @@ public class GameStateHandler
         CurrentGameState = GameState.Intro;
     }
 
+    public void SetStateToInGame()
+    {
+        CurrentGameState = GameState.NotDetected;
+    }
+
     public void SetCurrentState(GameState newState)
     {
+        Debug.Log(string.Format("STATE CHANGE! From {0} to {1}", CurrentGameState, newState));
         switch (newState)
         {
             case GameState.Intro:
@@ -56,5 +62,6 @@ public class GameStateHandler
             default:
                 throw new ArgumentException();
         }
+        Debug.Log("Final state is " + CurrentGameState);
     }
 }

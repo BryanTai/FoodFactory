@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,9 +17,11 @@ public class CanvasController : MonoBehaviour {
     private Image[] icons;
     private int iconCount = 4;
 
-    public Image TitleScreen;
-    public Image IntroBackground;
-    public Image IntroPhone;
+    //Intro Screen fields
+    //public GameObject TitleScreen;
+    //public GameObject IntroBackground;
+    //public GameObject IntroPhone;
+    public GameObject IntroScreens;
 
     private const float DIM_ALPHA = 0.5f;
 
@@ -37,6 +40,7 @@ public class CanvasController : MonoBehaviour {
         icons[3] = icon_3;
 
         scoreAlertSpawnPoint = new Vector3(100, -120, 0);
+        
     }
 
     // Use this for initialization
@@ -94,4 +98,14 @@ public class CanvasController : MonoBehaviour {
 
         Destroy(newAlert);
     }
+
+    internal void FadeIntroScreen()
+    {
+        IntroScreens.GetComponent<Animator>().SetTrigger("FirstTouch");
+    }
+    internal void FadeInstructionScreen()
+    {
+        IntroScreens.GetComponent<Animator>().SetTrigger("SecondTouch");
+    }
+
 }
