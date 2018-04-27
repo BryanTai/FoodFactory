@@ -86,7 +86,7 @@ public class GameController : MonoBehaviour
         if(GetGameState() == GameState.Intro)
         {
             handleIntroTouches();
-            handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
+            //handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
         }
         
         if (GetGameState() == GameState.Detected)
@@ -105,7 +105,24 @@ public class GameController : MonoBehaviour
 
     private void handleIntroTouches()
     {
-        //TODO SEE DEBUG CODE handleKeys
+        if (Input.touchCount > 0)
+        {
+            canvasController.showNextIntroScreen();
+        }
+    }
+
+    //Called by CanvasController.cs
+    public void StartGameplay()
+    {
+        gameStateHandler.SetCurrentStateToInGame();
+        if (gameStateHandler.LastSavedStateBeforeIntro == GameState.Detected)
+        {
+            HandleImageTargetDetected();
+        }
+        else if (gameStateHandler.LastSavedStateBeforeIntro == GameState.NotDetected)
+        {
+            HandleImageTargetLost();
+        }
     }
 
     //Called by ImageTargetEventHandler.cs
@@ -323,25 +340,16 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown("1"))
         {
-            canvasController.FadeIntroScreen();
+            canvasController.showNextIntroScreen();
         }
-        if (Input.GetKeyDown("2"))
-        {
-            canvasController.FadeInstructionScreen();
-
-        }
+        
         if (Input.GetKeyDown("3"))
         {
-            gameStateHandler.SetCurrentStateToInGame();
-            if(gameStateHandler.LastSavedStateBeforeIntro == GameState.Detected)
-            {
-                HandleImageTargetDetected();
-            }else if(gameStateHandler.LastSavedStateBeforeIntro == GameState.NotDetected)
-            {
-                HandleImageTargetLost();
-            }
+            StartGameplay();
         }
     }
+
+    
 
     private void handleTouches()
     {

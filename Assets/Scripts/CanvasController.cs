@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour {
-
+    public GameController gameController;
     public Canvas canvas;
 
     //TODO support a dynamic # of icons for different # of ingredients
@@ -99,13 +99,30 @@ public class CanvasController : MonoBehaviour {
         Destroy(newAlert);
     }
 
-    internal void FadeIntroScreen()
+    //internal void FadeIntroScreen()
+    //{
+    //    IntroScreens.GetComponent<Animator>().SetTrigger("FirstTouch");
+    //}
+    //internal void FadeInstructionScreen()
+    //{
+    //    IntroScreens.GetComponent<Animator>().SetTrigger("SecondTouch");
+    //}
+
+    internal void showNextIntroScreen()
     {
-        IntroScreens.GetComponent<Animator>().SetTrigger("FirstTouch");
-    }
-    internal void FadeInstructionScreen()
-    {
-        IntroScreens.GetComponent<Animator>().SetTrigger("SecondTouch");
+        Animator introAnim = IntroScreens.GetComponent<Animator>();
+
+        introAnim.SetTrigger("FirstTouch");
+        if (introAnim.GetBool("FadeTitleComplete"))
+        {
+            introAnim.SetTrigger("SecondTouch");
+            gameController.StartGameplay();
+        }
+        if (introAnim.GetBool("FadeInstructionsComplete"))
+        {
+            introAnim.SetTrigger("GameStarted");
+            introAnim.enabled = false;
+        }
     }
 
 }

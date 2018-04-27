@@ -260,6 +260,11 @@ Prefab:
       propertyPath: IntroScreens
       value: 
       objectReference: {fileID: 1011433465}
+    - target: {fileID: 114518749626242958, guid: 6f12092ea404fef4eb2ebaac69ee3e30,
+        type: 2}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1225463782}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f12092ea404fef4eb2ebaac69ee3e30, type: 2}
   m_IsPrefabParent: 0
