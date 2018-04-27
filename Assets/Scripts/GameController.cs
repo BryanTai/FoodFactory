@@ -115,15 +115,22 @@ public class GameController : MonoBehaviour
         if (gameStateHandler.CurrentGameState.InGame()) {
             timer.StartTimer();
             StartCoroutine(spawnFoodCoroutine);
+        }else
+        {
+            gameStateHandler.LastSavedStateBeforeIntro = GameState.Detected;
         }
     }
 
+    //Called by ImageTargetEventHandler.cs
     public void HandleImageTargetLost()
     {
         gameStateHandler.SetCurrentState(GameState.NotDetected);
         if (gameStateHandler.CurrentGameState.InGame())
         {
             StopCoroutine(spawnFoodCoroutine);
+        }else
+        {
+            gameStateHandler.LastSavedStateBeforeIntro = GameState.NotDetected;
         }
     }
 
@@ -325,7 +332,14 @@ public class GameController : MonoBehaviour
         }
         if (Input.GetKeyDown("3"))
         {
-            gameStateHandler.SetStateToInGame();
+            gameStateHandler.SetCurrentStateToInGame();
+            if(gameStateHandler.LastSavedStateBeforeIntro == GameState.Detected)
+            {
+                HandleImageTargetDetected();
+            }else if(gameStateHandler.LastSavedStateBeforeIntro == GameState.NotDetected)
+            {
+                HandleImageTargetLost();
+            }
         }
     }
 

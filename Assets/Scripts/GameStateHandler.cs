@@ -32,13 +32,15 @@ static class GameStateMethods
 public class GameStateHandler
 {
     public GameState CurrentGameState { get; private set; }
+    public GameState LastSavedStateBeforeIntro { get; set; }
 
     public GameStateHandler()
     {
         CurrentGameState = GameState.Intro;
+        LastSavedStateBeforeIntro = GameState.NotDetected;
     }
 
-    public void SetStateToInGame()
+    public void SetCurrentStateToInGame()
     {
         CurrentGameState = GameState.NotDetected;
     }
