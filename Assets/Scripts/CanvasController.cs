@@ -121,7 +121,7 @@ public class CanvasController : MonoBehaviour {
         if (introAnim.GetBool("FadeInstructionsComplete"))
         {
             introAnim.SetTrigger("GameStarted");
-            introAnim.enabled = false;
+            //introAnim.enabled = false;
         }
     }
 

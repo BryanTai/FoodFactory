@@ -19,6 +19,11 @@ public class GameController : MonoBehaviour
     private const int TOTAL_INTRO_SCREENS = 2;
     private int currentIntroScreen;
 
+    //Sound fields
+    //Cannon sound SOURCE: https://freesound.org/people/baefild/sounds/91293/
+    private AudioSource nomSound; //SOURCE: Team Fortress 2. NEED TO REPLACE
+    private AudioSource bwipSound; //SOURCE: Made by me with Bfxr mixer
+
     //Player fields
     private Camera playerCamera;
     private GameObject playerCollider;
@@ -65,6 +70,10 @@ public class GameController : MonoBehaviour
         playerCamera = GetComponent<Camera>();
         canvasController = GetComponent<CanvasController>();
 
+        AudioSource[] allSounds = GetComponents<AudioSource>();
+        nomSound = allSounds[0];
+        bwipSound = allSounds[1];
+
         rnd = new System.Random();
         gameStateHandler = new GameStateHandler();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
@@ -86,7 +95,7 @@ public class GameController : MonoBehaviour
         if(GetGameState() == GameState.Intro)
         {
             handleIntroTouches();
-            //handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
+            handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
         }
         
         if (GetGameState() == GameState.Detected)
@@ -159,7 +168,6 @@ public class GameController : MonoBehaviour
         {
             handlePlayerIngredientCollision(collidedIngredient);
         }
-        //TODO is detecting Meal collisions necessary?
         Meal collidedMeal = foodObject.GetComponent<Meal>();
         if(collidedMeal != null)
         {
@@ -180,6 +188,7 @@ public class GameController : MonoBehaviour
         int iconIndex = (int)collidedIngredient.ingredientType;
         acquiredIngredients[iconIndex] = true;
         canvasController.ActivateIcon(iconIndex);
+        bwipSound.Play();
 
         bool allIngredientsAcquired = true;
         foreach (bool b in acquiredIngredients)
@@ -198,8 +207,9 @@ public class GameController : MonoBehaviour
 
     private void handlePlayerMealCollision(Meal collidedMeal)
     {
-        //TODO might not need this step
+
         Debug.Log("Scored a meal!");
+        nomSound.Play();
         string scoreText = string.Format("+{0}!", collidedMeal.pointAward);
         canvasController.FlashScoreAlert(scoreText, Color.green);
     }
@@ -207,6 +217,7 @@ public class GameController : MonoBehaviour
     private void handleAllIngredientsAcquired()
     {
         Debug.Log("All Ingredients Acquired!");
+        //TODO PLAY SOUND EFFECT HERE
         isMealReady = true;
         canvasController.ResetAllIcons();
         acquiredIngredients = new bool[totalIngredientTypes];
@@ -271,7 +282,7 @@ public class GameController : MonoBehaviour
             {
                 nextFood = createRandomIngredient();
             }
-
+            Cannon.GetComponent<AudioSource>().Play();
             launchFood(nextFood);
             yield return new WaitForSeconds(waitTime/2);
             targetOffsetDirection = chooseRandomCannonDirection();
