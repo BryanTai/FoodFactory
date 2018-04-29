@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
+    public GameController gameController;
     private Text TimerText;
 
     private float startTime;
@@ -23,10 +24,16 @@ public class Timer : MonoBehaviour
         stopTimer = false;
     }
 
+    public void StopTimer()
+    {
+        stopTimer = true;
+    }
+
     void Update()
     {
         if (stopTimer)
         {
+            //TODO Blink the timer
             return;
         }
 
@@ -52,8 +59,8 @@ public class Timer : MonoBehaviour
         {
             Debug.Log("GAME OVER!!!");
             stopTimer = true;
-            //TODO
-            //UnityEngine.SceneManagement.SceneManager.LoadScene("LevelComplete");
+            
+            gameController.HandleTimeOut();
         }
     }
 

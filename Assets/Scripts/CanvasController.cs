@@ -18,10 +18,10 @@ public class CanvasController : MonoBehaviour {
     private int iconCount = 4;
 
     //Intro Screen fields
-    //public GameObject TitleScreen;
-    //public GameObject IntroBackground;
-    //public GameObject IntroPhone;
     public GameObject IntroScreens;
+
+    //GameOver Screen fields
+    public GameObject GameOverText;
 
     private const float DIM_ALPHA = 0.5f;
 
@@ -99,15 +99,6 @@ public class CanvasController : MonoBehaviour {
         Destroy(newAlert);
     }
 
-    //internal void FadeIntroScreen()
-    //{
-    //    IntroScreens.GetComponent<Animator>().SetTrigger("FirstTouch");
-    //}
-    //internal void FadeInstructionScreen()
-    //{
-    //    IntroScreens.GetComponent<Animator>().SetTrigger("SecondTouch");
-    //}
-
     internal void showNextIntroScreen()
     {
         Animator introAnim = IntroScreens.GetComponent<Animator>();
@@ -125,4 +116,9 @@ public class CanvasController : MonoBehaviour {
         }
     }
 
+    internal void showGameOverScreen()
+    {
+        Animator gameOverAnim = GameOverText.GetComponent<Animator>();
+        gameOverAnim.SetBool("IsGameOver", true);
+    }
 }

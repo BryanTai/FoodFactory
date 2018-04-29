@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour
     private IEnumerator spawnFoodCoroutine;
     public GameObject BunPrefab; //TODO there's gotta be a better way to load these
     public GameObject PattyPrefab; //otherwise just move it all to a factory
+
     public GameObject LettucePrefab;
     public GameObject TomatoPrefab;
     public GameObject BurgerPrefab;
@@ -95,7 +96,6 @@ public class GameController : MonoBehaviour
         if(GetGameState() == GameState.Intro)
         {
             handleIntroTouches();
-            handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
         }
         
         if (GetGameState() == GameState.Detected)
@@ -103,8 +103,7 @@ public class GameController : MonoBehaviour
             aimCannon();
         }
 
-        //TODO For Debugging Purposes
-        //handleTouches();
+        handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
     }
 
 
@@ -153,6 +152,8 @@ public class GameController : MonoBehaviour
         gameStateHandler.SetCurrentState(GameState.NotDetected);
         if (gameStateHandler.CurrentGameState.InGame())
         {
+            //TODO Encourage player to look at target card again
+            timer.StopTimer();
             StopCoroutine(spawnFoodCoroutine);
         }else
         {
@@ -221,6 +222,14 @@ public class GameController : MonoBehaviour
         isMealReady = true;
         canvasController.ResetAllIcons();
         acquiredIngredients = new bool[totalIngredientTypes];
+    }
+
+    internal void HandleTimeOut()
+    {
+        //TODO
+        // New scene?
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("LevelComplete");
+        canvasController.showGameOverScreen();
     }
 
     public GameState GetGameState()
@@ -356,7 +365,7 @@ public class GameController : MonoBehaviour
         
         if (Input.GetKeyDown("3"))
         {
-            StartGameplay();
+            canvasController.showGameOverScreen();
         }
     }
 
