@@ -103,9 +103,13 @@ public class GameController : MonoBehaviour
             aimCannon();
         }
 
+        if (GetGameState() == GameState.GameOver)
+        {
+            handleGameOverTouches();
+        }
+
         handleKeys(); //TODO THIS IS JUST FOR DEBUGGING
     }
-
 
     #endregion // UNITY_METHODS
 
@@ -229,7 +233,16 @@ public class GameController : MonoBehaviour
         //TODO
         // New scene?
         //UnityEngine.SceneManagement.SceneManager.LoadScene("LevelComplete");
+        gameStateHandler.SetCurrentState(GameState.GameOver);
         canvasController.showGameOverScreen();
+    }
+
+    private void handleGameOverTouches()
+    {
+        if (Input.touchCount > 0)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("main");
+        }
     }
 
     public GameState GetGameState()
