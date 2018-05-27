@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 54009247848589706}
   - component: {fileID: 135134626336526008}
   - component: {fileID: 114273570726494358}
+  - component: {fileID: 122443567819049880}
   m_Layer: 0
   m_Name: borger
   m_TagString: Untagged
@@ -134,6 +135,7 @@ GameObject:
   - component: {fileID: 33990091761138128}
   - component: {fileID: 23581898200196442}
   - component: {fileID: 54899093426302948}
+  - component: {fileID: 122079606194219784}
   m_Layer: 0
   m_Name: ketchuplayer
   m_TagString: Untagged
@@ -174,8 +176,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1649642070970882}
   m_LocalRotation: {x: 0.000000059604645, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 78.49, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 81.47, z: 0}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_Children:
   - {fileID: 4340036243159734}
   - {fileID: 4853616766213684}
@@ -668,6 +670,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b199a085817598947801bb03e59690a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!122 &122079606194219784
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1945560568347000}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278239495
+  m_Size: 5.1
+--- !u!122 &122443567819049880
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1649642070970882}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 4.74
 --- !u!135 &135134626336526008
 SphereCollider:
   m_ObjectHideFlags: 1
