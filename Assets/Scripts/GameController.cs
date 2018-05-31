@@ -62,32 +62,34 @@ public class GameController : MonoBehaviour
 
     #region ENUMS
     
-    enum Direction { up, down, left, right }
+    enum Direction { up, down, left, right, none }
+    private int totalDirections;
+    private bool debugOnlyNoneDirectionFlag = false;
     #endregion
 
     #region UNITY_METHODS
     void Awake()
     {
+        //Dynamically find Components
         playerCamera = GetComponent<Camera>();
         canvasController = GetComponent<CanvasController>();
-
+        
+        //Register Audio
         AudioSource[] allSounds = GetComponents<AudioSource>();
         nomSound = allSounds[0];
         bwipSound = allSounds[1];
 
+        //Set global fields
         rnd = new System.Random();
         gameStateHandler = new GameStateHandler();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
+        totalDirections = Enum.GetNames(typeof(Direction)).Length;
         acquiredIngredients = new bool[totalIngredientTypes];
         currentIntroScreen = 0;
 
         Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
         targetOffsetDirection = chooseRandomCannonDirection();
         spawnFoodCoroutine = launchFoodAtIntervals(SPAWN_TIME);
-    }
-
-    // Use this for initialization
-    void Start () {
     }
 
     // Update is called once per frame
@@ -222,7 +224,7 @@ public class GameController : MonoBehaviour
     private void handleAllIngredientsAcquired()
     {
         Debug.Log("All Ingredients Acquired!");
-        //TODO PLAY SOUND EFFECT HERE
+        //TODO PLAY FULL MEAL SOUND EFFECT HERE
         isMealReady = true;
         canvasController.ResetAllIcons();
         acquiredIngredients = new bool[totalIngredientTypes];
@@ -274,6 +276,8 @@ public class GameController : MonoBehaviour
                 return playerCamera.transform.position + (-transform.right * horizontalOffset);
             case (Direction.right):
                 return playerCamera.transform.position + (transform.right * horizontalOffset);
+            case (Direction.none):
+                return playerCamera.transform.position;
             default:
                 throw new ArgumentException();
         }
@@ -281,7 +285,10 @@ public class GameController : MonoBehaviour
 
     private Direction chooseRandomCannonDirection()
     {
-        return (Direction)rnd.Next(4);
+        //TODO this is only for DEBUGGING. Remove before production
+        if (debugOnlyNoneDirectionFlag) { return Direction.none; }
+
+        return (Direction)rnd.Next(totalDirections);
     }
     #endregion // AIM_CANNON_CODE
 
@@ -369,11 +376,17 @@ public class GameController : MonoBehaviour
 
     #region DEBUG_CODE
     //TODO THIS IS JUST FOR DEBUGGING IN THE EDITOR
+    //BE SURE TO DISABLE ALL THIS FOR RELEASE
     private void handleKeys()
     {
         if (Input.GetKeyDown("1"))
         {
             canvasController.showNextIntroScreen();
+        }
+
+        if (Input.GetKeyDown("2"))
+        {
+            debugOnlyNoneDirectionFlag = true;
         }
         
         if (Input.GetKeyDown("3"))
