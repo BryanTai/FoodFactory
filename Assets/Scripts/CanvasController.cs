@@ -9,10 +9,12 @@ public class CanvasController : MonoBehaviour {
     public Canvas canvas;
 
     //TODO support a dynamic # of icons for different # of ingredients
-    public Image icon_0;
-    public Image icon_1;
-    public Image icon_2;
-    public Image icon_3;
+    public Image BunIcon;
+    public Image PattyIcon;
+    public Image LettuceIcon;
+    public Image KetchupIcon;
+
+    public ScoringIcon ScoringIcon;
 
     private Image[] icons;
     private int iconCount = 4;
@@ -24,6 +26,7 @@ public class CanvasController : MonoBehaviour {
     public GameObject GameOverText;
 
     private const float DIM_ALPHA = 0.5f;
+    private const float NO_ALPHA = 0;
 
     //Score Notification Fields
     public GameObject ScoreAlertPrefab;
@@ -34,10 +37,10 @@ public class CanvasController : MonoBehaviour {
     void Awake()
     {
         icons = new Image[iconCount];
-        icons[0] = icon_0; //TODO refactor this hard code :I
-        icons[1] = icon_1;
-        icons[2] = icon_2;
-        icons[3] = icon_3;
+        icons[0] = BunIcon;//TODO refactor this hard code :I use a Map perhaps?
+        icons[1] = PattyIcon;
+        icons[2] = LettuceIcon;
+        icons[3] = KetchupIcon;
 
         scoreAlertSpawnPoint = new Vector3(100, -120, 0);
         
@@ -48,21 +51,50 @@ public class CanvasController : MonoBehaviour {
         ResetAllIcons();
 	}
 
-    public void ActivateIcon(int index)
-    {
-        Color oldColor = icons[index].color;
-        icons[index].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
-    }
+    #region ICON_CODE
 
     public void ResetAllIcons()
     {
         foreach (Image icon in icons)
         {
-            icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, DIM_ALPHA);
+            hideIcon(icon);
         }
+        hideIcon(ScoringIcon.GetComponent<Image>());
     }
 
-    //Borrowed from LineSort
+    private void hideIcon(Image icon)
+    {
+        icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, NO_ALPHA);
+    }
+
+    public void ActivateScoringIcon(int index)
+    {
+        setScoringIconSprite(index);
+        animateScoringIcon();
+    }
+    
+    private void setScoringIconSprite(int index)
+    {
+        ScoringIcon.currentIconIndex = index;
+        ScoringIcon.GetComponent<Image>().sprite = icons[index].sprite;
+    }
+
+    private void animateScoringIcon()
+    {
+        Animation scoreAnim = ScoringIcon.GetComponent<Animation>();
+        scoreAnim.Play();
+    }
+
+    //This gets called when ScoringIcon animation ends
+    public void ActivateTopIcon(int index)
+    {
+        Color oldColor = icons[index].color;
+        icons[index].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
+    }
+
+    #endregion //ICON_CODE
+
+    #region SCORE_CODE
     public void FlashScoreAlert(string text, Color color)
     {
         StartCoroutine(displayScoreAlert(text, color));
@@ -98,7 +130,9 @@ public class CanvasController : MonoBehaviour {
 
         Destroy(newAlert);
     }
+    #endregion //SCORE_CODE
 
+    #region SCREEN_CODE
     internal void showNextIntroScreen()
     {
         Animator introAnim = IntroScreens.GetComponent<Animator>();
@@ -121,4 +155,5 @@ public class CanvasController : MonoBehaviour {
         Animator gameOverAnim = GameOverText.GetComponent<Animator>();
         gameOverAnim.SetBool("IsGameOver", true);
     }
+    #endregion //SCREEN_CODE
 }

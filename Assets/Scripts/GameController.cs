@@ -190,9 +190,9 @@ public class GameController : MonoBehaviour
 
     private void handlePlayerIngredientCollision(Ingredient collidedIngredient)
     {
-        int iconIndex = (int)collidedIngredient.ingredientType;
+        int iconIndex = (int)collidedIngredient.ingredientType; //TODO refactor with Map?
         acquiredIngredients[iconIndex] = true;
-        canvasController.ActivateIcon(iconIndex);
+        canvasController.ActivateScoringIcon(iconIndex);
         bwipSound.Play();
 
         bool allIngredientsAcquired = true;
