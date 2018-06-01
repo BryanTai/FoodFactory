@@ -74,6 +74,7 @@ public class CanvasController : MonoBehaviour {
     
     private void setScoringIconSprite(IngredientType ingredientType)
     {
+        ScoringIcon.currentIngredientIcon = ingredientType;
         ScoringIcon.GetComponent<Image>().sprite = ingredientIcons[ingredientType].sprite;
     }
 
