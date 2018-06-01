@@ -197,6 +197,14 @@ public class GameController : MonoBehaviour
         canvasController.ActivateScoringIcon(iconIndex);
         bwipSound.Play();
 
+        //TODO maybe move this to CanvasController?
+        string scoreText = string.Format("+{0}", collidedIngredient.pointAward);
+        canvasController.FlashScoreAlert(scoreText, Color.white);
+    }
+
+    //Called by ScoringIcon.cs
+    internal void CheckIfAllIngredientsAcquired()
+    {
         bool allIngredientsAcquired = true;
         foreach (bool b in acquiredIngredients)
         {
@@ -207,9 +215,6 @@ public class GameController : MonoBehaviour
         {
             handleAllIngredientsAcquired();
         }
-        //TODO maybe move this to CanvasController?
-        string scoreText = string.Format("+{0}", collidedIngredient.pointAward);
-        canvasController.FlashScoreAlert(scoreText, Color.white);
     }
 
     private void handlePlayerMealCollision(Meal collidedMeal)
