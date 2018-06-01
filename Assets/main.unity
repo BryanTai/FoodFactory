@@ -2063,12 +2063,12 @@ Prefab:
         type: 2}
       propertyPath: m_Animations.Array.data[2]
       value: 
-      objectReference: {fileID: 7400000, guid: f7467f4cc3e9c0344b254467d1cc7bea, type: 2}
+      objectReference: {fileID: 7400000, guid: 1948c7a2c3ddad547b2c8aca13c67b8b, type: 2}
     - target: {fileID: 111948945269313692, guid: cfc70de5bd31c5e46abe6f9079569e7a,
         type: 2}
       propertyPath: m_Animations.Array.data[3]
       value: 
-      objectReference: {fileID: 7400000, guid: ba13b1aa828926240a582682b497767e, type: 2}
+      objectReference: {fileID: 7400000, guid: 4a0e005f9fc05124a86b6ce1116dd3aa, type: 2}
     - target: {fileID: 111948945269313692, guid: cfc70de5bd31c5e46abe6f9079569e7a,
         type: 2}
       propertyPath: m_Animation

@@ -57,11 +57,13 @@ public class GameController : MonoBehaviour
     //Canvas UI fields
     private CanvasController canvasController;
     //Game Logic fields
-    private bool[] acquiredIngredients; //TODO make this a Dictionary with IngredientTypes and counts
+
+    //private bool[] acquiredIngredients; //TODO make this a Dictionary with IngredientTypes and counts
+    private Dictionary<IngredientType, bool> acquiredIngredientTypes;
     #endregion
 
     #region ENUMS
-    
+
     enum Direction { up, down, left, right, none }
     private int totalDirections;
     private bool debugOnlyNoneDirectionFlag = false;
@@ -73,7 +75,7 @@ public class GameController : MonoBehaviour
         //Dynamically find Components
         playerCamera = GetComponent<Camera>();
         canvasController = GetComponent<CanvasController>();
-        
+
         //Register Audio
         AudioSource[] allSounds = GetComponents<AudioSource>();
         nomSound = allSounds[0];
@@ -84,12 +86,21 @@ public class GameController : MonoBehaviour
         gameStateHandler = new GameStateHandler();
         totalIngredientTypes = Enum.GetNames(typeof(IngredientType)).Length;
         totalDirections = Enum.GetNames(typeof(Direction)).Length;
-        acquiredIngredients = new bool[totalIngredientTypes];
-        currentIntroScreen = 0;
+        resetAcquiredIngredientTypes();
 
+        currentIntroScreen = 0;
         Physics.gravity = new Vector3(0, NO_GRAVITY, 0);
         targetOffsetDirection = chooseRandomCannonDirection();
         spawnFoodCoroutine = launchFoodAtIntervals(SPAWN_TIME);
+    }
+
+    private void resetAcquiredIngredientTypes()
+    {
+        acquiredIngredientTypes = new Dictionary<IngredientType, bool>(totalIngredientTypes);
+        foreach (IngredientType ingredientType in Enum.GetValues(typeof(IngredientType)))
+        {
+            acquiredIngredientTypes.Add(ingredientType, false);
+        }
     }
 
     // Update is called once per frame
@@ -192,9 +203,9 @@ public class GameController : MonoBehaviour
 
     private void handlePlayerIngredientCollision(Ingredient collidedIngredient)
     {
-        int iconIndex = (int)collidedIngredient.ingredientType; //TODO refactor with Map?
-        acquiredIngredients[iconIndex] = true;
-        canvasController.ActivateScoringIcon(iconIndex);
+        IngredientType ingredientType = collidedIngredient.ingredientType;
+        acquiredIngredientTypes[ingredientType] = true;
+        canvasController.ActivateScoringIcon(ingredientType);
         bwipSound.Play();
 
         //TODO maybe move this to CanvasController?
@@ -206,7 +217,7 @@ public class GameController : MonoBehaviour
     internal void CheckIfAllIngredientsAcquired()
     {
         bool allIngredientsAcquired = true;
-        foreach (bool b in acquiredIngredients)
+        foreach (bool b in acquiredIngredientTypes.Values)
         {
             allIngredientsAcquired = allIngredientsAcquired && b;
         }
@@ -232,7 +243,7 @@ public class GameController : MonoBehaviour
         //TODO PLAY FULL MEAL SOUND EFFECT HERE
         isMealReady = true;
         canvasController.ResetAllIcons();
-        acquiredIngredients = new bool[totalIngredientTypes];
+        resetAcquiredIngredientTypes();
     }
 
     internal void HandleTimeOut()
@@ -354,7 +365,7 @@ public class GameController : MonoBehaviour
                 newIngredient = Instantiate(PattyPrefab); break;
             case IngredientType.lettuce:
                 newIngredient = Instantiate(LettucePrefab); break;
-            case IngredientType.tomato:
+            case IngredientType.ketchup:
                 newIngredient = Instantiate(TomatoPrefab); break;
             default:
                 throw new ArgumentException();

@@ -8,7 +8,7 @@ public enum IngredientType
     bun,
     patty,
     lettuce,
-    tomato
+    ketchup
 }
 
 [RequireComponent(typeof(Collider))]

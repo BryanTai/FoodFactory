@@ -16,7 +16,7 @@ public class CanvasController : MonoBehaviour {
 
     public ScoringIcon ScoringIcon;
 
-    private Image[] icons;
+    private Dictionary<IngredientType, Image> ingredientIcons;
     private int iconCount = 4;
 
     //Intro Screen fields
@@ -36,14 +36,13 @@ public class CanvasController : MonoBehaviour {
 
     void Awake()
     {
-        icons = new Image[iconCount];
-        icons[0] = BunIcon;//TODO refactor this hard code :I use a Map perhaps?
-        icons[1] = PattyIcon;
-        icons[2] = LettuceIcon;
-        icons[3] = KetchupIcon;
+        ingredientIcons = new Dictionary<IngredientType, Image>();
+        ingredientIcons.Add(IngredientType.bun, BunIcon);
+        ingredientIcons.Add(IngredientType.patty, PattyIcon);
+        ingredientIcons.Add(IngredientType.lettuce, LettuceIcon);
+        ingredientIcons.Add(IngredientType.ketchup, KetchupIcon);
 
         scoreAlertSpawnPoint = new Vector3(100, -120, 0);
-        
     }
 
     // Use this for initialization
@@ -55,7 +54,7 @@ public class CanvasController : MonoBehaviour {
 
     public void ResetAllIcons()
     {
-        foreach (Image icon in icons)
+        foreach (Image icon in ingredientIcons.Values)
         {
             hideIcon(icon);
         }
@@ -67,38 +66,30 @@ public class CanvasController : MonoBehaviour {
         icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, NO_ALPHA);
     }
 
-    public void ActivateScoringIcon(int index)
+    public void ActivateScoringIcon(IngredientType ingredientType)
     {
-        setScoringIconSprite(index);
-        animateScoringIcon(index);
+        setScoringIconSprite(ingredientType);
+        animateScoringIcon(ingredientType);
     }
     
-    private void setScoringIconSprite(int index)
+    private void setScoringIconSprite(IngredientType ingredientType)
     {
-        ScoringIcon.currentIconIndex = index;
-        ScoringIcon.GetComponent<Image>().sprite = icons[index].sprite;
+        ScoringIcon.GetComponent<Image>().sprite = ingredientIcons[ingredientType].sprite;
     }
 
-    private void animateScoringIcon(int index)
+    private void animateScoringIcon(IngredientType ingredientType)
     {
         //Animation scoreAnim = ScoringIcon.GetComponent<Animation>();
         //scoreAnim.Play();
         Animator scoreAnim = ScoringIcon.GetComponent<Animator>();
-
-        if (index < 2) { 
-           scoreAnim.SetTrigger("AnimatePosition00");
-        }else
-        {
-            scoreAnim.SetTrigger("AnimatePosition01");
-        }
-        //TODO check for other 4 here
+        scoreAnim.SetTrigger(ingredientType.ToString());
     }
 
     //This gets called when ScoringIcon reaches the Top bar
-    public void ActivateTopIcon(int index)
+    public void ActivateTopIcon(IngredientType ingredientType)
     {
-        Color oldColor = icons[index].color;
-        icons[index].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
+        Color oldColor = ingredientIcons[ingredientType].color;
+        ingredientIcons[ingredientType].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
     }
 
     #endregion //ICON_CODE
