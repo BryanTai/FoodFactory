@@ -70,7 +70,7 @@ public class CanvasController : MonoBehaviour {
     public void ActivateScoringIcon(int index)
     {
         setScoringIconSprite(index);
-        animateScoringIcon();
+        animateScoringIcon(index);
     }
     
     private void setScoringIconSprite(int index)
@@ -79,13 +79,22 @@ public class CanvasController : MonoBehaviour {
         ScoringIcon.GetComponent<Image>().sprite = icons[index].sprite;
     }
 
-    private void animateScoringIcon()
+    private void animateScoringIcon(int index)
     {
-        Animation scoreAnim = ScoringIcon.GetComponent<Animation>();
-        scoreAnim.Play();
+        //Animation scoreAnim = ScoringIcon.GetComponent<Animation>();
+        //scoreAnim.Play();
+        Animator scoreAnim = ScoringIcon.GetComponent<Animator>();
+
+        if (index < 2) { 
+           scoreAnim.SetTrigger("AnimatePosition00");
+        }else
+        {
+            scoreAnim.SetTrigger("AnimatePosition01");
+        }
+        //TODO check for other 4 here
     }
 
-    //This gets called when ScoringIcon animation ends
+    //This gets called when ScoringIcon reaches the Top bar
     public void ActivateTopIcon(int index)
     {
         Color oldColor = icons[index].color;

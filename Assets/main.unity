@@ -1949,6 +1949,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1031676780}
     m_Modifications:
+    - target: {fileID: 111948945269313692, guid: cfc70de5bd31c5e46abe6f9079569e7a,
+        type: 2}
+      propertyPath: m_Animations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 224399474487074488, guid: cfc70de5bd31c5e46abe6f9079569e7a,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -2049,6 +2054,31 @@ Prefab:
       propertyPath: canvasController
       value: 
       objectReference: {fileID: 1293561527}
+    - target: {fileID: 111948945269313692, guid: cfc70de5bd31c5e46abe6f9079569e7a,
+        type: 2}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: a66656522bde79a48b92252bf97aae4c, type: 2}
+    - target: {fileID: 111948945269313692, guid: cfc70de5bd31c5e46abe6f9079569e7a,
+        type: 2}
+      propertyPath: m_Animations.Array.data[2]
+      value: 
+      objectReference: {fileID: 7400000, guid: f7467f4cc3e9c0344b254467d1cc7bea, type: 2}
+    - target: {fileID: 111948945269313692, guid: cfc70de5bd31c5e46abe6f9079569e7a,
+        type: 2}
+      propertyPath: m_Animations.Array.data[3]
+      value: 
+      objectReference: {fileID: 7400000, guid: ba13b1aa828926240a582682b497767e, type: 2}
+    - target: {fileID: 111948945269313692, guid: cfc70de5bd31c5e46abe6f9079569e7a,
+        type: 2}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 95348804798428074, guid: cfc70de5bd31c5e46abe6f9079569e7a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cfc70de5bd31c5e46abe6f9079569e7a, type: 2}
   m_IsPrefabParent: 0
