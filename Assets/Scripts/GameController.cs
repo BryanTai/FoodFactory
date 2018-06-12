@@ -131,7 +131,7 @@ public class GameController : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            canvasController.showNextIntroScreen();
+            canvasController.handleIntroTouches();
         }
     }
 
@@ -395,7 +395,7 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown("1"))
         {
-            canvasController.showNextIntroScreen();
+            canvasController.handleIntroTouches();
         }
 
         if (Input.GetKeyDown("2"))

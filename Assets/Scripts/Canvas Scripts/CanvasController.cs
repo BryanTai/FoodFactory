@@ -147,9 +147,9 @@ public class CanvasController : MonoBehaviour {
     #endregion //SCORE_CODE
 
     #region SCREEN_CODE
-    internal void showNextIntroScreen()
+    internal void handleIntroTouches()
     {
-        screenCanvas.showNextIntroScreen();
+        screenCanvas.handleTouches();
     }
 
     

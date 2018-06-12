@@ -14,40 +14,35 @@ public class ScreenCanvasController : MonoBehaviour {
         canvasController = transform.parent.GetComponent<CanvasController>();
     }
 	
-    internal void showNextIntroScreen()
-    { //TODO CLEAN UP UNUSED TRIGGERS
+    internal void handleTouches()
+    {
         if (!introAnim.GetBool("TouchedAtLeastOnce"))
         {
             introAnim.SetTrigger("FirstTouch");
             introAnim.SetBool("TouchedAtLeastOnce", true);
-        }
-        if (introAnim.GetBool("FadeTitleComplete"))
+        }else if (introAnim.GetBool("InTutorial"))
         {
-            introAnim.SetTrigger("SecondTouch");
-            //gameController.StartGameplay();
-            //ShowHUD();
-        }
-        if (introAnim.GetBool("FadeInstructionsComplete"))
-        {
-            introAnim.SetTrigger("GameStarted");
-
-            //introAnim.enabled = false;
+            introAnim.SetTrigger("TutorialScreenPressed");
+            introAnim.SetBool("InTutorial", false);
         }
     }
 
     //Called by the Main Menu Start Button
     public void HideMainMenuAndStartGamePlay()
     {
+        Debug.Log("Start button pressed!");
         introAnim.SetTrigger("StartGameButtonPressed");
     }
 
     public void HideMainMenuAndShowTutorial()
     {
-        //TODO
+        Debug.Log("How To button pressed!");
+        introAnim.SetTrigger("TutorialButtonPressed");
     }
 
     public void HideMainMenuAndShowOptions()
     {
+        Debug.Log("Options button pressed!");
         //TODO
     }
 
@@ -59,6 +54,7 @@ public class ScreenCanvasController : MonoBehaviour {
 
     internal void showGameOverText()
     {
+        GameOverText.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
         Animator gameOverAnim = GameOverText.GetComponent<Animator>();
         gameOverAnim.SetBool("IsGameOver", true);
     }
