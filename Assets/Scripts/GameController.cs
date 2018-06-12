@@ -319,7 +319,6 @@ public class GameController : MonoBehaviour
             GameObject nextFood;
             if (isMealReady)
             {
-                //TODO Add some kind of aura or particle effect 
                 nextFood = createMeal(MealType.burger);
                 isMealReady = false;
             }

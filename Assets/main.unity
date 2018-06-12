@@ -331,6 +331,10 @@ Prefab:
       propertyPath: ScoringIcon
       value: 
       objectReference: {fileID: 546940813}
+    - target: {fileID: 1704832954271148, guid: 6f12092ea404fef4eb2ebaac69ee3e30, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f12092ea404fef4eb2ebaac69ee3e30, type: 2}
   m_IsPrefabParent: 0
