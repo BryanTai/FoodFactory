@@ -13,10 +13,8 @@ using UnityEngine.UI;
 public class CanvasController : MonoBehaviour {
     public GameController gameController;
     public Canvas hudCanvas; //TODO move other Canvas Controllers
-    public Canvas introCanvas;
+    public ScreenCanvasController screenCanvas;
     public Canvas threeDCanvas;
-    public MenuCanvasController menuCanvas;
-
 
     //TODO support a dynamic # of icons for different # of ingredients
     public Image BunIcon;
@@ -59,12 +57,12 @@ public class CanvasController : MonoBehaviour {
 
     public void HideHUD()
     {
-        hudCanvas.enabled = false;
+        hudCanvas.gameObject.SetActive(false);
     }
 
     public void ShowHUD()
     {
-        hudCanvas.enabled = true;
+        hudCanvas.gameObject.SetActive(true);
     }
 
     public void ResetAllIcons()
@@ -151,31 +149,10 @@ public class CanvasController : MonoBehaviour {
     #region SCREEN_CODE
     internal void showNextIntroScreen()
     {
-        Animator introAnim = introCanvas.GetComponent<Animator>();
-
-        if (!introAnim.GetBool("TouchedAtLeastOnce"))
-        {
-            introAnim.SetTrigger("FirstTouch");
-            introAnim.SetBool("TouchedAtLeastOnce", true);
-        }
-        if (introAnim.GetBool("FadeTitleComplete"))
-        {
-            introAnim.SetTrigger("SecondTouch");
-            gameController.StartGameplay();
-            ShowHUD();
-        }
-        if (introAnim.GetBool("FadeInstructionsComplete"))
-        {
-            introAnim.SetTrigger("GameStarted");
-            
-            //introAnim.enabled = false;
-        }
+        screenCanvas.showNextIntroScreen();
     }
 
-    public void FadeMainMenuAndStartGameplay()
-    {
-        //TODO Move Main Menu off screen, show HUD, and trigger GameController gameplay
-    }
+    
 
     #endregion //SCREEN_CODE
 
@@ -183,8 +160,20 @@ public class CanvasController : MonoBehaviour {
 
     internal void showGameOverText()
     {
-        menuCanvas.showGameOverText();
+        screenCanvas.showGameOverText();
     }
 
     #endregion //MENU_CODE
+
+    internal void StartGameplay()
+    {
+        ShowHUD();
+        gameController.StartGameplay();
+    }
+
+    //TODO THIS IS ONLY FOR EDITOR DEBUGGING, REMOVE LATER
+    internal void DEBUGHideMainMenuAndStartGamePlay()
+    {
+        screenCanvas.HideMainMenuAndStartGamePlay();
+    }
 }

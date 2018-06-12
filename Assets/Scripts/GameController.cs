@@ -407,6 +407,11 @@ public class GameController : MonoBehaviour
         {
             canvasController.showGameOverText();
         }
+
+        if (Input.GetKeyDown("4"))
+        {
+            canvasController.DEBUGHideMainMenuAndStartGamePlay();
+        }
     }
 
     

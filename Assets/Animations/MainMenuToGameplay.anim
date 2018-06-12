@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: MenuExitLeft
+  m_Name: MainMenuToGameplay
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,28 +20,28 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
-        time: 0.083333336
-        value: -7.5
+        time: 0.06666667
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.2
-        value: -103.01022
-        inSlope: -2019.7311
-        outSlope: -2019.7311
+        time: 0.16666667
+        value: -116.44152
+        inSlope: -2207.4111
+        outSlope: -2207.4111
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.3
-        value: -1156.0536
-        inSlope: -2101.1353
-        outSlope: -2101.1353
+        time: 0.26666668
+        value: -1147.9263
+        inSlope: -1985.1685
+        outSlope: -1985.1685
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.71666664
-        value: -1267.2509
-        inSlope: -87.28027
-        outSlope: -87.28027
+        time: 0.7
+        value: -1271.4653
+        inSlope: 29.83871
+        outSlope: 29.83871
         tangentMode: 0
       - serializedVersion: 2
         time: 1
@@ -53,7 +53,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: 
+    path: MainMenuPanel
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -61,7 +61,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.000058254223
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -74,8 +74,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalPosition.z
-    path: 
+    attribute: m_AnchoredPosition.y
+    path: MainMenuPanel
     classID: 224
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -87,18 +87,18 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 812376349
       attribute: 1460864421
       script: {fileID: 0}
       typeID: 224
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 0
-      attribute: 2033536083
+      path: 812376349
+      attribute: 538195251
       script: {fileID: 0}
       typeID: 224
-      customType: 28
+      customType: 0
       isPPtrCurve: 0
     pptrCurveMapping: []
   m_AnimationClipSettings:
@@ -126,28 +126,28 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
-        time: 0.083333336
-        value: -7.5
+        time: 0.06666667
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.2
-        value: -103.01022
-        inSlope: -2019.7311
-        outSlope: -2019.7311
+        time: 0.16666667
+        value: -116.44152
+        inSlope: -2207.4111
+        outSlope: -2207.4111
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.3
-        value: -1156.0536
-        inSlope: -2101.1353
-        outSlope: -2101.1353
+        time: 0.26666668
+        value: -1147.9263
+        inSlope: -1985.1685
+        outSlope: -1985.1685
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.71666664
-        value: -1267.2509
-        inSlope: -87.28027
-        outSlope: -87.28027
+        time: 0.7
+        value: -1271.4653
+        inSlope: 29.83871
+        outSlope: 29.83871
         tangentMode: 0
       - serializedVersion: 2
         time: 1
@@ -159,7 +159,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: 
+    path: MainMenuPanel
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -167,7 +167,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.000058254223
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -180,8 +180,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalPosition.z
-    path: 
+    attribute: m_AnchoredPosition.y
+    path: MainMenuPanel
     classID: 224
     script: {fileID: 0}
   m_EulerEditorCurves: []
@@ -189,8 +189,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 0.98333335
-    functionName: 
+  - time: 0.9166667
+    functionName: StartGameplay
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
