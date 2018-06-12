@@ -12,10 +12,10 @@ using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour {
     public GameController gameController;
-    public Canvas hudCanvas;
+    public Canvas hudCanvas; //TODO move other Canvas Controllers
     public Canvas introCanvas;
     public Canvas threeDCanvas;
-    public Canvas menuCanvas;
+    public MenuCanvasController menuCanvas;
 
 
     //TODO support a dynamic # of icons for different # of ingredients
@@ -28,9 +28,6 @@ public class CanvasController : MonoBehaviour {
 
     private Dictionary<IngredientType, Image> ingredientIcons;
     private int iconCount = 4;
-
-    //GameOver Screen fields
-    public GameObject GameOverText;
 
     private const float DIM_ALPHA = 0.5f;
     private const float NO_ALPHA = 0;
@@ -175,14 +172,18 @@ public class CanvasController : MonoBehaviour {
         }
     }
 
+    public void FadeMainMenuAndStartGameplay()
+    {
+        //TODO Move Main Menu off screen, show HUD, and trigger GameController gameplay
+    }
+
     #endregion //SCREEN_CODE
 
     #region MENU_CODE
 
     internal void showGameOverText()
     {
-        Animator gameOverAnim = GameOverText.GetComponent<Animator>();
-        gameOverAnim.SetBool("IsGameOver", true);
+        menuCanvas.showGameOverText();
     }
 
     #endregion //MENU_CODE
