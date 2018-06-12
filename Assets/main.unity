@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 160153464}
   - component: {fileID: 160153463}
   - component: {fileID: 160153467}
+  - component: {fileID: 160153468}
   m_Layer: 5
   m_Name: IntroScreen Canvas
   m_TagString: Untagged
@@ -480,6 +481,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &160153468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 160153462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f5b0fba5fb18c42ae33356297d3fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &221144520
 GameObject:
   m_ObjectHideFlags: 0

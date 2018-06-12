@@ -156,7 +156,11 @@ public class CanvasController : MonoBehaviour {
     {
         Animator introAnim = introCanvas.GetComponent<Animator>();
 
-        introAnim.SetTrigger("FirstTouch");
+        if (!introAnim.GetBool("TouchedAtLeastOnce"))
+        {
+            introAnim.SetTrigger("FirstTouch");
+            introAnim.SetBool("TouchedAtLeastOnce", true);
+        }
         if (introAnim.GetBool("FadeTitleComplete"))
         {
             introAnim.SetTrigger("SecondTouch");
