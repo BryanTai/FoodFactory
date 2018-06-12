@@ -55,7 +55,7 @@ public class GameController : MonoBehaviour
     private bool isMealReady;
 
     //Canvas UI fields
-    private CanvasController canvasController;
+    public CanvasController canvasController;
     //Game Logic fields
 
     //private bool[] acquiredIngredients; //TODO make this a Dictionary with IngredientTypes and counts
@@ -74,7 +74,6 @@ public class GameController : MonoBehaviour
     {
         //Dynamically find Components
         playerCamera = GetComponent<Camera>();
-        canvasController = GetComponent<CanvasController>();
 
         //Register Audio
         AudioSource[] allSounds = GetComponents<AudioSource>();
@@ -252,7 +251,7 @@ public class GameController : MonoBehaviour
         // New scene?
         //UnityEngine.SceneManagement.SceneManager.LoadScene("LevelComplete");
         gameStateHandler.SetCurrentState(GameState.GameOver);
-        canvasController.showGameOverScreen();
+        canvasController.showGameOverText();
     }
 
     private void handleGameOverTouches()
@@ -406,7 +405,7 @@ public class GameController : MonoBehaviour
         
         if (Input.GetKeyDown("3"))
         {
-            canvasController.showGameOverScreen();
+            canvasController.showGameOverText();
         }
     }
 

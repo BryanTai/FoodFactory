@@ -4,9 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//CanvasController coordinates 4 different Canvases for the game
+    // IntroCanvas shows all the intro screens and their components, hidden after game starts
+    // 3DCanvas suppliments IntroCanvas and has a Render Mode set to the Camera instead of Overlay
+    // HUDCanvas contains all Ingredient Icons and text boxes, only shows when Game is running
+    // MenuCanvas contains all the Manu items, including main menu and end game menu
+
 public class CanvasController : MonoBehaviour {
     public GameController gameController;
-    public Canvas canvas;
+    public Canvas hudCanvas;
+    public Canvas introCanvas;
+    public Canvas threeDCanvas;
+    public Canvas menuCanvas;
+
 
     //TODO support a dynamic # of icons for different # of ingredients
     public Image BunIcon;
@@ -18,9 +28,6 @@ public class CanvasController : MonoBehaviour {
 
     private Dictionary<IngredientType, Image> ingredientIcons;
     private int iconCount = 4;
-
-    //Intro Screen fields
-    public GameObject IntroScreens;
 
     //GameOver Screen fields
     public GameObject GameOverText;
@@ -48,9 +55,20 @@ public class CanvasController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         ResetAllIcons();
+        HideHUD();
 	}
 
-    #region ICON_CODE
+    #region HUD_CODE
+
+    public void HideHUD()
+    {
+        hudCanvas.enabled = false;
+    }
+
+    public void ShowHUD()
+    {
+        hudCanvas.enabled = true;
+    }
 
     public void ResetAllIcons()
     {
@@ -93,7 +111,7 @@ public class CanvasController : MonoBehaviour {
         ingredientIcons[ingredientType].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
     }
 
-    #endregion //ICON_CODE
+    #endregion //HUD_CODE
 
     #region SCORE_CODE
     public void FlashScoreAlert(string text, Color color)
@@ -105,7 +123,7 @@ public class CanvasController : MonoBehaviour {
     {
         //Create new invisible
         GameObject newAlert = Instantiate(ScoreAlertPrefab, scoreAlertSpawnPoint, Quaternion.identity);
-        newAlert.transform.SetParent(canvas.transform, false);
+        newAlert.transform.SetParent(hudCanvas.transform, false);
 
         Text alertText = newAlert.GetComponent<Text>();
         alertText.text = text;
@@ -136,25 +154,32 @@ public class CanvasController : MonoBehaviour {
     #region SCREEN_CODE
     internal void showNextIntroScreen()
     {
-        Animator introAnim = IntroScreens.GetComponent<Animator>();
+        Animator introAnim = introCanvas.GetComponent<Animator>();
 
         introAnim.SetTrigger("FirstTouch");
         if (introAnim.GetBool("FadeTitleComplete"))
         {
             introAnim.SetTrigger("SecondTouch");
             gameController.StartGameplay();
+            ShowHUD();
         }
         if (introAnim.GetBool("FadeInstructionsComplete"))
         {
             introAnim.SetTrigger("GameStarted");
+            
             //introAnim.enabled = false;
         }
     }
 
-    internal void showGameOverScreen()
+    #endregion //SCREEN_CODE
+
+    #region MENU_CODE
+
+    internal void showGameOverText()
     {
         Animator gameOverAnim = GameOverText.GetComponent<Animator>();
         gameOverAnim.SetBool("IsGameOver", true);
     }
-    #endregion //SCREEN_CODE
+
+    #endregion //MENU_CODE
 }
