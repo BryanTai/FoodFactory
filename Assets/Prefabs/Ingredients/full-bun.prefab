@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23293937044517148}
   - component: {fileID: 95777762507277906}
   - component: {fileID: 54215315351116238}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bun-bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23368505382514440}
   - component: {fileID: 95635729594879332}
   - component: {fileID: 54115369011899244}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bun-top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,9 +60,9 @@ GameObject:
   - component: {fileID: 54712280845973102}
   - component: {fileID: 135631843010989344}
   - component: {fileID: 114679316481996240}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: full-bun
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

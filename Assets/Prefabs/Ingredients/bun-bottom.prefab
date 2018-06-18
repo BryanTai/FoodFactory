@@ -25,9 +25,9 @@ GameObject:
   - component: {fileID: 54482661806710808}
   - component: {fileID: 135951820662530586}
   - component: {fileID: 114150711181557586}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bun-bottom
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

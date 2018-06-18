@@ -24,9 +24,9 @@ GameObject:
   - component: {fileID: 54186634021595160}
   - component: {fileID: 135200208668907802}
   - component: {fileID: 114714199178656074}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: patty
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 33826714200574550}
   - component: {fileID: 135487784858656104}
   - component: {fileID: 114295065430939020}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerCollider
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -417,12 +417,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 114988931129662138}
-  canvas: {fileID: 0}
-  icon_0: {fileID: 0}
-  icon_1: {fileID: 0}
-  icon_2: {fileID: 0}
-  icon_3: {fileID: 0}
-  IntroScreens: {fileID: 0}
+  hudCanvas: {fileID: 0}
+  screenCanvas: {fileID: 0}
+  threeDCanvas: {fileID: 0}
+  BunIcon: {fileID: 0}
+  PattyIcon: {fileID: 0}
+  LettuceIcon: {fileID: 0}
+  KetchupIcon: {fileID: 0}
+  ScoringIcon: {fileID: 0}
   ScoreAlertPrefab: {fileID: 1861841454148214, guid: fff80661b9025a8429401d080a866cda,
     type: 2}
 --- !u!114 &114843709555546900
@@ -460,6 +462,7 @@ MonoBehaviour:
   BurgerPrefab: {fileID: 1521821405461188, guid: 4b6010a090629be48bd5b68eaca2e01d,
     type: 2}
   FoodSpawnPoint: {fileID: 0}
+  canvasController: {fileID: 0}
 --- !u!135 &135487784858656104
 SphereCollider:
   m_ObjectHideFlags: 1

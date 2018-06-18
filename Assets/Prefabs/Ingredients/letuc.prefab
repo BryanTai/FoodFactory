@@ -25,9 +25,9 @@ GameObject:
   - component: {fileID: 54449672293700584}
   - component: {fileID: 135589545579392904}
   - component: {fileID: 114918370587182742}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: letuc
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

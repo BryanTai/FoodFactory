@@ -25,9 +25,9 @@ GameObject:
   - component: {fileID: 135413537662378488}
   - component: {fileID: 54279695032773744}
   - component: {fileID: 114209491962788098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ketchup
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

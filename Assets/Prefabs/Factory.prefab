@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4044381383643580}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Food Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4173340230073484}
   - component: {fileID: 33824090769381736}
   - component: {fileID: 23113800374533868}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4571127653721588}
   - component: {fileID: 33211100635383490}
   - component: {fileID: 23604060269346444}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Dome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4680653411070976}
   - component: {fileID: 33339462263315164}
   - component: {fileID: 23924701658893740}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4027720533962730}
   - component: {fileID: 82505819317484594}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cannon Axis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4505375949539892}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4316467419842640}
   - component: {fileID: 33427594686532862}
   - component: {fileID: 23950921408447784}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Visual Aid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
