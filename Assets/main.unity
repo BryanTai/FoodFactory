@@ -122,7 +122,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 9930989}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cannon Axis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 16872044}
   - component: {fileID: 16872043}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CanvasController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 209988649}
   - component: {fileID: 209988651}
   - component: {fileID: 209988650}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 221144521}
   - component: {fileID: 221144523}
   - component: {fileID: 221144522}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -724,7 +724,7 @@ GameObject:
   - component: {fileID: 275133700}
   - component: {fileID: 275133702}
   - component: {fileID: 275133701}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1076,7 +1076,7 @@ GameObject:
   - component: {fileID: 641332941}
   - component: {fileID: 641332943}
   - component: {fileID: 641332942}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1556,7 +1556,7 @@ GameObject:
   - component: {fileID: 947126388}
   - component: {fileID: 947126387}
   - component: {fileID: 947126386}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: START Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1678,7 +1678,7 @@ GameObject:
   - component: {fileID: 969040613}
   - component: {fileID: 969040612}
   - component: {fileID: 969040611}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HOWTO Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,7 +1953,7 @@ GameObject:
   - component: {fileID: 1013317271}
   - component: {fileID: 1013317273}
   - component: {fileID: 1013317272}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2228,7 +2228,7 @@ GameObject:
   - component: {fileID: 1174572949}
   - component: {fileID: 1174572951}
   - component: {fileID: 1174572950}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2303,7 +2303,7 @@ GameObject:
   - component: {fileID: 1218340534}
   - component: {fileID: 1218340536}
   - component: {fileID: 1218340535}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Visual Aid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2388,7 +2388,7 @@ GameObject:
   - component: {fileID: 1267054811}
   - component: {fileID: 1267054813}
   - component: {fileID: 1267054812}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MainMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2820,7 +2820,7 @@ GameObject:
   - component: {fileID: 1570106837}
   - component: {fileID: 1570106836}
   - component: {fileID: 1570106835}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OPTIONS Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3049,6 +3049,34 @@ Prefab:
     - target: {fileID: 4260452028206984, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
       propertyPath: m_LocalScale.z
       value: 0.030000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266678438637610, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878714441692884, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674141771635166, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945244778996716, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649642070970882, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1491304452124334, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945560568347000, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 057a126fa7b308148a466c2fd604dc4f, type: 2}
@@ -3436,7 +3464,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1777437833}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Food Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3695,7 +3723,7 @@ GameObject:
   - component: {fileID: 2007550260}
   - component: {fileID: 2007550259}
   - component: {fileID: 2007550258}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 3D Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3786,7 +3814,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2129243412}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Factory model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
