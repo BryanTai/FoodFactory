@@ -49,6 +49,7 @@ public class CanvasController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        showScreenCanvas();
         ResetAllIcons();
         HideHUD();
 	}
@@ -147,6 +148,11 @@ public class CanvasController : MonoBehaviour {
     #endregion //SCORE_CODE
 
     #region SCREEN_CODE
+    private void showScreenCanvas()
+    {
+        screenCanvas.gameObject.SetActive(true);
+    }
+
     internal void handleIntroTouches()
     {
         screenCanvas.handleTouches();
