@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
 
     //Sound fields
     //Cannon sound SOURCE: https://freesound.org/people/baefild/sounds/91293/
-    private AudioSource nomSound; //SOURCE: Team Fortress 2. NEED TO REPLACE
+    private AudioSource nomSound; //SOURCE: Team Fortress 2. //TODO NEED TO REPLACE
     private AudioSource bwipSound; //SOURCE: Made by me with Bfxr mixer
 
     //Player fields
@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
     public CanvasController canvasController;
     //Game Logic fields
 
-    //private bool[] acquiredIngredients; //TODO make this a Dictionary with IngredientTypes and counts
+    //TODO make this a Dictionary with IngredientTypes and counts
     private Dictionary<IngredientType, bool> acquiredIngredientTypes;
     #endregion
 
@@ -240,6 +240,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("All Ingredients Acquired!");
         //TODO PLAY FULL MEAL SOUND EFFECT HERE
+        //TODO Create animation for the ScoringIcon
         isMealReady = true;
         canvasController.ResetAllIcons();
         resetAcquiredIngredientTypes();
@@ -345,13 +346,51 @@ public class GameController : MonoBehaviour
         //Debug.Log("initVelocity: " + initVelocity);
     }
 
+    const int ACQUIRED_TYPE_WEIGHT = 1;
+    const int UNACQUIRED_TYPE_WEIGHT = 4;
     private GameObject createRandomIngredient()
     {
-        int index = rnd.Next(totalIngredientTypes);
-        IngredientType nextType = (IngredientType)index;
+        IngredientType nextType = findWeightedRandomIngredientType();
         return createIngredient(nextType);
     }
 
+    private IngredientType findWeightedRandomIngredientType()
+    {
+        int totalWeight = 0;
+        int[] typeWeights = new int[totalIngredientTypes];
+        foreach (int typeIndex in acquiredIngredientTypes.Keys)
+        {
+            if (acquiredIngredientTypes[(IngredientType)typeIndex] == true)
+            {
+                typeWeights[typeIndex] = ACQUIRED_TYPE_WEIGHT;
+                totalWeight += ACQUIRED_TYPE_WEIGHT;
+            }
+            else
+            {
+                typeWeights[typeIndex] = UNACQUIRED_TYPE_WEIGHT;
+                totalWeight += UNACQUIRED_TYPE_WEIGHT;
+            }
+        }
+
+        int randomGuess = rnd.Next(totalWeight);
+
+        IngredientType nextType = 0;
+
+        for (int typeIndex = 0; typeIndex < totalIngredientTypes; typeIndex++)
+        {
+            if (randomGuess < typeWeights[typeIndex])
+            {
+                nextType = (IngredientType)typeIndex;
+                break;
+            }
+
+            randomGuess = randomGuess - typeWeights[typeIndex];
+        }
+
+        return nextType;
+    }
+
+    //TODO Instead of Instantiating new Objects, load them in advance and hide them by disabling
     private GameObject createIngredient(IngredientType ingredientType)
     {
         GameObject newIngredient;
