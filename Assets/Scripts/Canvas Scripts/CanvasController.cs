@@ -22,6 +22,8 @@ public class CanvasController : MonoBehaviour {
     public Image LettuceIcon;
     public Image KetchupIcon;
 
+    public Image BurgerIcon;
+
     public ScoringIcon ScoringIcon;
 
     private Dictionary<IngredientType, Image> ingredientIcons;
@@ -43,6 +45,8 @@ public class CanvasController : MonoBehaviour {
         ingredientIcons.Add(IngredientType.patty, PattyIcon);
         ingredientIcons.Add(IngredientType.lettuce, LettuceIcon);
         ingredientIcons.Add(IngredientType.ketchup, KetchupIcon);
+
+        fadeIcon(BurgerIcon);
 
         scoreAlertSpawnPoint = new Vector3(100, -120, 0);
     }
@@ -72,12 +76,23 @@ public class CanvasController : MonoBehaviour {
         {
             hideIcon(icon);
         }
+        fadeIcon(BurgerIcon);
         hideIcon(ScoringIcon.GetComponent<Image>());
     }
 
     private void hideIcon(Image icon)
     {
         icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, NO_ALPHA);
+    }
+
+    private void fadeIcon(Image icon)
+    {
+        icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, DIM_ALPHA);
+    }
+
+    private void showIcon(Image icon)
+    {
+        icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 1);
     }
 
     public void ActivateScoringIcon(IngredientType ingredientType)
@@ -105,6 +120,16 @@ public class CanvasController : MonoBehaviour {
     {
         Color oldColor = ingredientIcons[ingredientType].color;
         ingredientIcons[ingredientType].color = new Color(oldColor.r, oldColor.g, oldColor.b, 1);
+    }
+
+    //Called by GameController
+    public void ActivateMealIcon()
+    {
+        showIcon(BurgerIcon);
+    }
+    public void FadeMealIcon()
+    {
+        fadeIcon(BurgerIcon);
     }
 
     #endregion //HUD_CODE

@@ -232,6 +232,7 @@ public class GameController : MonoBehaviour
 
         Debug.Log("Scored a meal!");
         nomSound.Play();
+        canvasController.FadeMealIcon();
         string scoreText = string.Format("+{0}!", collidedMeal.pointAward);
         canvasController.FlashScoreAlert(scoreText, Color.green);
     }
@@ -240,9 +241,9 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("All Ingredients Acquired!");
         //TODO PLAY FULL MEAL SOUND EFFECT HERE
-        //TODO Create animation for the ScoringIcon
         isMealReady = true;
         canvasController.ResetAllIcons();
+        canvasController.ActivateMealIcon();
         resetAcquiredIngredientTypes();
     }
 
