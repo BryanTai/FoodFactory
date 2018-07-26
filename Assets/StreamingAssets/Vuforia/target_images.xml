@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="arcane_flight" size="1200.000000 1681.183228" />
+    <ImageTarget name="daybreak-chaplain-p287695-281670_image" size="50.000000 69.444443" />
     <ImageTarget name="headwater_sentries" size="50.000000 69.002693" />
     <ImageTarget name="naturalize" size="50.000000 69.798660" />
     <ImageTarget name="griselbrand" size="50.000000 69.798660" />
