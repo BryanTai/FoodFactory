@@ -248,7 +248,7 @@ Prefab:
         type: 2}
       propertyPath: ScoreText
       value: 
-      objectReference: {fileID: 1082325988}
+      objectReference: {fileID: 2043060305}
     - target: {fileID: 114988931129662138, guid: 6f12092ea404fef4eb2ebaac69ee3e30,
         type: 2}
       propertyPath: Cannon
@@ -2323,7 +2323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1082325988
 MonoBehaviour:
   m_ObjectHideFlags: 0

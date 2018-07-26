@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     //General game fields
     private System.Random rnd;
     public Timer timer;
-    public Text ScoreText;
+    public TextMesh ScoreText;
     private GameStateHandler gameStateHandler;
 
     //Intro fields
@@ -197,7 +197,7 @@ public class GameController : MonoBehaviour
     private void updatePlayerScore(int pointsAwarded)
     {
         playerScore += pointsAwarded;
-        ScoreText.text = playerScore.ToString();
+        ScoreText.text = "Score " + playerScore.ToString();
     }
 
     private void handlePlayerIngredientCollision(Ingredient collidedIngredient)
