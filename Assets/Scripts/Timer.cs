@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public GameController gameController;
-    private Text TimerText;
+    private TextMesh TimerText;
+    private MeshRenderer TimerRenderer;
+    public Material RedMaterial;
 
     private float startTime;
     public float timeLeftSeconds { get; set; }
@@ -14,7 +16,9 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        TimerText = GetComponent<Text>();
+        TimerText = GetComponent<TextMesh>();
+        TimerRenderer = GetComponent<MeshRenderer>();
+        //TimerRenderer.material = TimerRenderer.materials[0];
         startTime = Time.time;
         timeLeftSeconds = 60; //TODO Load this from GameController or something
     }
@@ -47,11 +51,11 @@ public class Timer : MonoBehaviour
             seconds = "0" + seconds;
         }
 
-        TimerText.text = minutes + ":" + seconds;
+        TimerText.text = "Time " + minutes + ":" + seconds;
 
         if (timerIsStillWhite && timeLeftSeconds <= FLASHING_TIME)
         {
-            TimerText.color = Color.red;
+            TimerRenderer.material = RedMaterial;
             timerIsStillWhite = false;
         }
 
