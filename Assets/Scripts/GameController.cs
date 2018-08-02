@@ -56,6 +56,8 @@ public class GameController : MonoBehaviour
 
     //Canvas UI fields
     public CanvasController canvasController;
+    public FlatHUDController flatHUDController;
+
     //Game Logic fields
 
     //TODO make this a Dictionary with IngredientTypes and counts
@@ -204,15 +206,26 @@ public class GameController : MonoBehaviour
     {
         IngredientType ingredientType = collidedIngredient.ingredientType;
         acquiredIngredientTypes[ingredientType] = true;
-        canvasController.ActivateScoringIcon(ingredientType);
+
+        //TODO have OPTION to swap between FlatHUD or Phonehud here
+        //canvasController.ActivateScoringIcon(ingredientType); 
+        flatHUDController.ActivateIngredientModel(ingredientType);
+
         bwipSound.Play();
 
         //TODO maybe move this to CanvasController?
         string scoreText = string.Format("+{0}", collidedIngredient.pointAward);
         canvasController.FlashScoreAlert(scoreText, Color.white);
+        StartCoroutine(delayedCheckIfAllIngredientsAcquired());
     }
 
-    //Called by ScoringIcon.cs
+    private IEnumerator delayedCheckIfAllIngredientsAcquired()
+    {
+        yield return new WaitForSeconds(1);
+        CheckIfAllIngredientsAcquired();
+    }
+
+    //Called by ScoringIcon.cs and delayedCheck
     internal void CheckIfAllIngredientsAcquired()
     {
         bool allIngredientsAcquired = true;
@@ -242,8 +255,13 @@ public class GameController : MonoBehaviour
         Debug.Log("All Ingredients Acquired!");
         //TODO PLAY FULL MEAL SOUND EFFECT HERE
         isMealReady = true;
-        canvasController.ResetAllIcons();
+
+        //TODO have OPTION to swap between FlatHUD or Phonehud here
+        //canvasController.ResetAllIcons();
         canvasController.ActivateMealIcon();
+
+        flatHUDController.ShrinkAllModels();
+
         resetAcquiredIngredientTypes();
     }
 

@@ -40,12 +40,21 @@ public class FlatHUDController : MonoBehaviour {
         }
     }
 
+    public void ShrinkAllModels()
+    {
+        foreach (GameObject model in ingredientModels.Values)
+        {
+            shrinkModel(model);
+        }
+    }
+
     private void hideModel(GameObject model)
     {
         model.SetActive(false);
     }
 
-    //TODO Shrink model til it disappears
+    //TODO Shrink model til it disappears, might need to LOCK this
+    //to prevent conflict with grabbed ingredient while processing meal
     private void shrinkModel(GameObject model)
     {
         model.SetActive(false);

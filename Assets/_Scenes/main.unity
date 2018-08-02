@@ -475,6 +475,11 @@ Prefab:
       propertyPath: near clip plane
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114988931129662138, guid: 6f12092ea404fef4eb2ebaac69ee3e30,
+        type: 2}
+      propertyPath: flatHUDController
+      value: 
+      objectReference: {fileID: 1002003037}
     m_RemovedComponents:
     - {fileID: 114518749626242958, guid: 6f12092ea404fef4eb2ebaac69ee3e30, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 6f12092ea404fef4eb2ebaac69ee3e30, type: 2}
@@ -2413,7 +2418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1001896252
 RectTransform:
   m_ObjectHideFlags: 0
