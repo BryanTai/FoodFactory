@@ -51,7 +51,7 @@ public class Timer : MonoBehaviour
             seconds = "0" + seconds;
         }
 
-        TimerText.text = "Time " + minutes + ":" + seconds;
+        TimerText.text = minutes + ":" + seconds;
 
         if (timerIsStillWhite && timeLeftSeconds <= FLASHING_TIME)
         {
@@ -61,7 +61,7 @@ public class Timer : MonoBehaviour
 
         if (timeLeftSeconds < 0)
         {
-            Debug.Log("GAME OVER!!!");
+            Debug.Log("Timer is DONE!!");
             stopTimer = true;
             
             gameController.HandleTimeOut();

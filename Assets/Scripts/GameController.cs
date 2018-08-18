@@ -199,7 +199,7 @@ public class GameController : MonoBehaviour
     private void updatePlayerScore(int pointsAwarded)
     {
         playerScore += pointsAwarded;
-        ScoreText.text = "Score " + playerScore.ToString();
+        ScoreText.text = playerScore.ToString();
     }
 
     private void handlePlayerIngredientCollision(Ingredient collidedIngredient)
